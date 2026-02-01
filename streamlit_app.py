@@ -5,6 +5,7 @@ import pandas as pd
 import plotly.express as px
 from datetime import datetime
 import time
+import random
 import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
