@@ -98,18 +98,32 @@ def push_data_to_github():
              return False, "No data file found to backup."
 
         # Configure Git Identity (Local to this repo)
-        subprocess.run(["git", "config", "user.email", "backup-bot@niceacademy.com"], check=True)
-        subprocess.run(["git", "config", "user.name", "Backup Bot"], check=True)
+        # Pass environment to subprocess to ensure credentials (especially on Windows) are accessible
+        env = os.environ.copy()
+        
+        subprocess.run(["git", "config", "user.email", "backup-bot@niceacademy.com"], check=True, env=env)
+        subprocess.run(["git", "config", "user.name", "Backup Bot"], check=True, env=env)
+
+        # Pull first to avoid rejection (rebase to keep history clean)
+        subprocess.run(["git", "pull", "--rebase", "origin", "main"], check=False, env=env)
 
         # Add the data file
-        subprocess.run(["git", "add", DATA_FILE], check=True)
+        subprocess.run(["git", "add", DATA_FILE], check=True, env=env)
         
+        # Check if there are changes to commit
+        status = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True, env=env)
+        if not status.stdout.strip():
+            return True, "No changes to backup."
+
         # Commit
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        subprocess.run(["git", "commit", "-m", f"Auto-backup assessment data: {timestamp}"], check=True)
+        subprocess.run(["git", "commit", "-m", f"Auto-backup assessment data: {timestamp}"], check=True, env=env)
         
-        # Push
-        subprocess.run(["git", "push"], check=True)
+        # Push with detailed error capturing
+        result = subprocess.run(["git", "push", "origin", "main"], capture_output=True, text=True, env=env)
+        if result.returncode != 0:
+            return False, f"Git Push Failed: {result.stderr}"
+            
         return True, "Data successfully backed up to GitHub!"
     except subprocess.CalledProcessError as e:
         return False, f"Git Error: {str(e)}"
