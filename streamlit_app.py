@@ -94,6 +94,10 @@ def save_result(user_info, score, total_q, passed):
 
 def push_data_to_github():
     try:
+        # Configure Git Identity (Local to this repo)
+        subprocess.run(["git", "config", "user.email", "backup-bot@niceacademy.com"], check=True)
+        subprocess.run(["git", "config", "user.name", "Backup Bot"], check=True)
+
         # Add the data file
         subprocess.run(["git", "add", DATA_FILE], check=True)
         
