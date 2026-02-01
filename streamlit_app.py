@@ -317,7 +317,7 @@ def show_landing_page():
                 help="Select the specific competency assessment you wish to undertake."
             )
         else:
-            st.warning("Please select a Role to see available assessments.")
+            st.warning("Please select a Role to see available competency based self-assessments.")
             assessment_type = None
 
         st.markdown("<br>", unsafe_allow_html=True)
