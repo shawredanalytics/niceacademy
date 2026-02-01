@@ -755,6 +755,342 @@ RADIOLOGY_QUALITY_QUESTIONS = [
     }
 ]
 
+# 9. CRITICAL CARE NURSING COMPETENCY ASSESSMENT
+CRITICAL_CARE_QUESTIONS = [
+    {
+        "id": 1,
+        "category": "Hemodynamics",
+        "text": "What is the normal range for Mean Arterial Pressure (MAP) required to maintain adequate organ perfusion?",
+        "options": ["40-50 mmHg", "65-100 mmHg", "110-130 mmHg", "20-30 mmHg"],
+        "correctAnswer": 1,
+        "explanation": "A MAP of at least 65 mmHg is generally considered necessary to maintain adequate tissue perfusion."
+    },
+    {
+        "id": 2,
+        "category": "Neurological Monitoring",
+        "text": "What is the primary purpose of the Glasgow Coma Scale (GCS)?",
+        "options": ["To assess pain level", "To assess level of consciousness", "To assess respiratory rate", "To assess muscle strength"],
+        "correctAnswer": 1,
+        "explanation": "GCS provides a standardized method for assessing the level of consciousness in patients with acute brain injury."
+    },
+    {
+        "id": 3,
+        "category": "Ventilation",
+        "text": "Which ventilator alarm indicates high pressure in the circuit, potentially due to secretions or biting the tube?",
+        "options": ["Low Tidal Volume", "High Pressure Limit / High Peak Pressure", "Low Battery", "Apnea"],
+        "correctAnswer": 1,
+        "explanation": "High Peak Pressure alarms are triggered by increased resistance (kinks, secretions, biting) or decreased compliance."
+    },
+    {
+        "id": 4,
+        "category": "ABG Interpretation",
+        "text": "A pH of 7.25, PaCO2 of 60 mmHg, and HCO3 of 24 mEq/L indicates:",
+        "options": ["Respiratory Acidosis", "Respiratory Alkalosis", "Metabolic Acidosis", "Metabolic Alkalosis"],
+        "correctAnswer": 0,
+        "explanation": "Low pH (<7.35) and high PaCO2 (>45) indicate Respiratory Acidosis."
+    },
+    {
+        "id": 5,
+        "category": "Vasoactive Drugs",
+        "text": "Norepinephrine (Levophed) is primarily used in septic shock to:",
+        "options": ["Decrease heart rate", "Increase blood pressure via vasoconstriction", "Increase urine output", "Sedate the patient"],
+        "correctAnswer": 1,
+        "explanation": "Norepinephrine is a potent vasoconstrictor used as the first-line vasopressor to increase MAP in septic shock."
+    },
+    {
+        "id": 6,
+        "category": "ECG Interpretation",
+        "text": "Which rhythm is characterized by a chaotic, irregular baseline with no discernible P waves and an irregular R-R interval?",
+        "options": ["Sinus Bradycardia", "Atrial Fibrillation", "Ventricular Tachycardia", "First Degree Block"],
+        "correctAnswer": 1,
+        "explanation": "Atrial Fibrillation is defined by an irregularly irregular rhythm and absence of P waves."
+    },
+    {
+        "id": 7,
+        "category": "Sepsis",
+        "text": "What is the 'Golden Hour' priority in severe sepsis management?",
+        "options": ["Physical therapy", "Antibiotic administration and fluid resuscitation", "Feeding the patient", "Changing the bed linens"],
+        "correctAnswer": 1,
+        "explanation": "Early administration of broad-spectrum antibiotics and fluids within the first hour significantly reduces mortality."
+    },
+    {
+        "id": 8,
+        "category": "ICP Monitoring",
+        "text": "What is a normal Intracranial Pressure (ICP) range?",
+        "options": ["0-10 mmHg", "5-15 mmHg", "20-40 mmHg", "50-100 mmHg"],
+        "correctAnswer": 1,
+        "explanation": "Normal ICP is typically 5-15 mmHg. Sustained pressure >20 mmHg is pathological."
+    },
+    {
+        "id": 9,
+        "category": "Sedation",
+        "text": "The RASS score is used to assess:",
+        "options": ["Pain", "Agitation and Sedation levels", "Delirium", "Risk of falls"],
+        "correctAnswer": 1,
+        "explanation": "The Richmond Agitation-Sedation Scale (RASS) measures the depth of sedation or level of agitation."
+    },
+    {
+        "id": 10,
+        "category": "End of Life",
+        "text": "What is the primary goal of palliative care in the ICU?",
+        "options": ["To cure the disease", "Symptom management and quality of life", "To hasten death", "To ignore the family"],
+        "correctAnswer": 1,
+        "explanation": "Palliative care focuses on relieving symptoms (pain, dyspnea) and supporting the patient/family, regardless of prognosis."
+    }
+]
+
+# 10. INTENSIVE CARE COMPETENCY ASSESSMENT
+INTENSIVE_CARE_QUESTIONS = [
+    {
+        "id": 1,
+        "category": "VAP Bundle",
+        "text": "Which of the following is a key component of the Ventilator-Associated Pneumonia (VAP) prevention bundle?",
+        "options": ["Keeping the patient flat", "Head of bed elevation (30-45 degrees)", "Changing circuits daily", "Deep sedation"],
+        "correctAnswer": 1,
+        "explanation": "Elevating the head of the bed reduces aspiration risk, a key factor in VAP prevention."
+    },
+    {
+        "id": 2,
+        "category": "CLABSI Prevention",
+        "text": "When accessing a central line, how long should you 'scrub the hub'?",
+        "options": ["1 second", "It is not necessary", "15-30 seconds (or per policy)", "5 minutes"],
+        "correctAnswer": 2,
+        "explanation": "Vigorous friction for 15-30 seconds (using alcohol/chlorhexidine) is critical to prevent CLABSI."
+    },
+    {
+        "id": 3,
+        "category": "Delirium",
+        "text": "The CAM-ICU tool is used to screen for:",
+        "options": ["Depression", "Delirium", "Dementia", "Diabetes"],
+        "correctAnswer": 1,
+        "explanation": "CAM-ICU (Confusion Assessment Method for the ICU) is the standard tool for detecting delirium."
+    },
+    {
+        "id": 4,
+        "category": "Nutrition",
+        "text": "Why is early enteral nutrition (within 24-48 hours) preferred in critically ill patients?",
+        "options": ["It is cheaper", "It preserves gut mucosal integrity and immune function", "It is easier for nurses", "It prevents diarrhea"],
+        "correctAnswer": 1,
+        "explanation": "Enteral feeding helps maintain the gut barrier and reduces infectious complications compared to TPN."
+    },
+    {
+        "id": 5,
+        "category": "Stress Ulcer Prophylaxis",
+        "text": "Which medication class is commonly used for stress ulcer prophylaxis in ICU patients?",
+        "options": ["Antibiotics", "Proton Pump Inhibitors (PPIs) or H2 Blockers", "Beta Blockers", "Diuretics"],
+        "correctAnswer": 1,
+        "explanation": "PPIs (e.g., Pantoprazole) or H2 blockers prevent stress-related mucosal damage/bleeding."
+    },
+    {
+        "id": 6,
+        "category": "Glycemic Control",
+        "text": "What is the generally recommended target blood glucose range for critically ill patients?",
+        "options": ["80-110 mg/dL", "140-180 mg/dL", "200-300 mg/dL", "< 60 mg/dL"],
+        "correctAnswer": 1,
+        "explanation": "Current guidelines suggest a target of 140-180 mg/dL to avoid hypoglycemia while managing stress hyperglycemia."
+    },
+    {
+        "id": 7,
+        "category": "Mobility",
+        "text": "What is a benefit of early mobilization in the ICU?",
+        "options": ["Increases length of stay", "Reduces ICU-acquired weakness and delirium", "Increases ventilator days", "Makes the patient tired"],
+        "correctAnswer": 1,
+        "explanation": "Early mobility is proven to improve functional outcomes and reduce delirium and duration of mechanical ventilation."
+    },
+    {
+        "id": 8,
+        "category": "Renal Replacement",
+        "text": "CRRT (Continuous Renal Replacement Therapy) is indicated for:",
+        "options": ["Stable patients with kidney failure", "Hemodynamically unstable patients with AKI", "Routine dialysis", "Dehydration"],
+        "correctAnswer": 1,
+        "explanation": "CRRT provides slow, continuous fluid/solute removal, making it safer for hemodynamically unstable patients than intermittent hemodialysis."
+    },
+    {
+        "id": 9,
+        "category": "DVT Prophylaxis",
+        "text": "Unless contraindicated, what is the standard pharmacological DVT prophylaxis in ICU?",
+        "options": ["Aspirin", "Low Molecular Weight Heparin (e.g., Enoxaparin) or Heparin", "Warfarin", "TPA"],
+        "correctAnswer": 1,
+        "explanation": "LMWH or unfractionated heparin are standard for preventing venous thromboembolism in immobile ICU patients."
+    },
+    {
+        "id": 10,
+        "category": "Code Blue",
+        "text": "During CPR, what is the correct compression rate?",
+        "options": ["60-80 per minute", "100-120 per minute", "140-160 per minute", "As fast as possible"],
+        "correctAnswer": 1,
+        "explanation": "High-quality CPR requires a rate of 100-120 compressions per minute."
+    }
+]
+
+# 11. EMERGENCY CARE COMPETENCY ASSESSMENT
+EMERGENCY_CARE_QUESTIONS = [
+    {
+        "id": 1,
+        "category": "Triage",
+        "text": "Using a 5-level triage system (e.g., ESI), a patient requiring immediate life-saving intervention is Level:",
+        "options": ["1 (Resuscitation)", "3 (Urgent)", "5 (Non-urgent)", "2 (Emergent)"],
+        "correctAnswer": 0,
+        "explanation": "Level 1 indicates an immediate threat to life requiring instant intervention (e.g., cardiac arrest)."
+    },
+    {
+        "id": 2,
+        "category": "Stroke",
+        "text": "What does the FAST acronym stand for in stroke assessment?",
+        "options": ["Face, Arm, Speech, Time", "Fast, Action, Save, Time", "Face, Airway, Shock, Trauma", "Feet, Arms, Stomach, Toes"],
+        "correctAnswer": 0,
+        "explanation": "Face drooping, Arm weakness, Speech difficulty, Time to call emergency services."
+    },
+    {
+        "id": 3,
+        "category": "Trauma",
+        "text": "In the Primary Survey of trauma, 'A' stands for:",
+        "options": ["Alertness", "Airway with C-spine protection", "Allergies", "Assessment"],
+        "correctAnswer": 1,
+        "explanation": "The Primary Survey ABCDE starts with Airway maintenance with Cervical spine protection."
+    },
+    {
+        "id": 4,
+        "category": "ACLS",
+        "text": "Which of the following is a shockable rhythm in cardiac arrest?",
+        "options": ["Asystole", "Pulseless Electrical Activity (PEA)", "Ventricular Fibrillation (VF)", "Sinus Rhythm"],
+        "correctAnswer": 2,
+        "explanation": "VF and Pulseless VT are shockable rhythms. Asystole and PEA are not."
+    },
+    {
+        "id": 5,
+        "category": "Chest Pain",
+        "text": "The standard door-to-ECG time for a patient presenting with chest pain is:",
+        "options": ["Within 10 minutes", "Within 30 minutes", "Within 1 hour", "Whenever a doctor sees them"],
+        "correctAnswer": 0,
+        "explanation": "An ECG should be obtained and interpreted within 10 minutes to identify STEMI."
+    },
+    {
+        "id": 6,
+        "category": "Anaphylaxis",
+        "text": "What is the first-line medication for anaphylaxis?",
+        "options": ["Benadryl (Diphenhydramine)", "Epinephrine (Adrenaline) IM", "Steroids", "Albuterol"],
+        "correctAnswer": 1,
+        "explanation": "IM Epinephrine is the only medication that reverses the physiological changes of anaphylaxis and must be given immediately."
+    },
+    {
+        "id": 7,
+        "category": "Sepsis",
+        "text": "A qSOFA score includes which three criteria?",
+        "options": ["Fever, WBC, HR", "Altered mental status, Systolic BP <= 100, RR >= 22", "Lactate, BP, Urine output", "HR, O2 Sat, Temp"],
+        "correctAnswer": 1,
+        "explanation": "qSOFA (quick Sepsis Related Organ Failure Assessment) uses Altered mental status, SBP <= 100, and RR >= 22."
+    },
+    {
+        "id": 8,
+        "category": "Toxicology",
+        "text": "What is the antidote for Opioid overdose?",
+        "options": ["Flumazenil", "Naloxone (Narcan)", "Acetylcysteine", "Atropine"],
+        "correctAnswer": 1,
+        "explanation": "Naloxone is the specific antagonist for opioids."
+    },
+    {
+        "id": 9,
+        "category": "Burns",
+        "text": "The 'Rule of Nines' is used to estimate:",
+        "options": ["Depth of burn", "Total Body Surface Area (TBSA) burned", "Fluid requirements", "Pain level"],
+        "correctAnswer": 1,
+        "explanation": "Rule of Nines estimates TBSA to guide fluid resuscitation."
+    },
+    {
+        "id": 10,
+        "category": "Pediatrics",
+        "text": "What tool is commonly used in the ED to estimate weight and equipment sizes for children?",
+        "options": ["Broselow Tape", "BMI Chart", "Guessing", "Adult scales"],
+        "correctAnswer": 0,
+        "explanation": "The Broselow Tape uses length to estimate weight and appropriate drug doses/equipment sizes for pediatric resuscitation."
+    }
+]
+
+# 12. PEDIATRIC NURSING CARE COMPETENCY ASSESSMENT
+PEDIATRIC_NURSING_QUESTIONS = [
+    {
+        "id": 1,
+        "category": "Assessment",
+        "text": "The Pediatric Assessment Triangle (PAT) consists of:",
+        "options": ["Appearance, Work of Breathing, Circulation to Skin", "Airway, Breathing, Circulation", "Alertness, Behavior, Crying", "Age, Weight, Height"],
+        "correctAnswer": 0,
+        "explanation": "PAT provides a rapid visual assessment of a sick child using Appearance, Work of Breathing, and Circulation."
+    },
+    {
+        "id": 2,
+        "category": "Vitals",
+        "text": "Compared to adults, a normal heart rate for an infant is:",
+        "options": ["Slower", "Faster", "The same", "Irregular"],
+        "correctAnswer": 1,
+        "explanation": "Infants have a much higher metabolic rate and cardiac output demand, leading to higher resting heart rates (e.g., 100-160)."
+    },
+    {
+        "id": 3,
+        "category": "Fluid Therapy",
+        "text": "Daily maintenance fluid requirements for children are often calculated using the:",
+        "options": ["Rule of Nines", "Holliday-Segar (4-2-1) Rule", "Parkland Formula", "Fixed rate of 100ml/hr"],
+        "correctAnswer": 1,
+        "explanation": "The 4-2-1 rule calculates fluid needs based on weight (4ml/kg for first 10kg, etc.)."
+    },
+    {
+        "id": 4,
+        "category": "Medication Safety",
+        "text": "Why are pediatric medication calculations considered high-risk?",
+        "options": ["Children don't like medicine", "Doses are weight-based (mg/kg), increasing calculation error risk", "Drugs are different", "Syringes are small"],
+        "correctAnswer": 1,
+        "explanation": "Weight-based dosing requires precise calculation; a decimal point error can be fatal (10-fold overdose)."
+    },
+    {
+        "id": 5,
+        "category": "Pain Assessment",
+        "text": "Which pain scale is appropriate for a non-verbal infant or toddler?",
+        "options": ["Numeric (0-10)", "FLACC Scale", "Visual Analog Scale", "Asking them"],
+        "correctAnswer": 1,
+        "explanation": "FLACC (Face, Legs, Activity, Cry, Consolability) observes behaviors to assess pain in non-verbal children."
+    },
+    {
+        "id": 6,
+        "category": "Respiratory",
+        "text": "Which of the following is an early sign of respiratory distress in an infant?",
+        "options": ["Cyanosis", "Nasal flaring and retractions", "Apnea", "Sleeping"],
+        "correctAnswer": 1,
+        "explanation": "Nasal flaring, retractions, and grunting are compensatory mechanisms indicating respiratory distress."
+    },
+    {
+        "id": 7,
+        "category": "Development",
+        "text": "Separation anxiety typically peaks around what age?",
+        "options": ["1 month", "6-18 months", "5 years", "Teenagers"],
+        "correctAnswer": 1,
+        "explanation": "Separation anxiety is a normal developmental stage peaking in older infants and toddlers."
+    },
+    {
+        "id": 8,
+        "category": "Safety",
+        "text": "When leaving a toddler in a crib, the side rails should be:",
+        "options": ["All the way down", "Halfway up", "All the way up and secured", "Removed"],
+        "correctAnswer": 2,
+        "explanation": "Rails must be fully up and locked to prevent falls."
+    },
+    {
+        "id": 9,
+        "category": "Dehydration",
+        "text": "A sunken fontanelle in an infant is a sign of:",
+        "options": ["Overhydration", "Dehydration", "Increased intracranial pressure", "Normal finding"],
+        "correctAnswer": 1,
+        "explanation": "A depressed or sunken anterior fontanelle suggests significant volume depletion."
+    },
+    {
+        "id": 10,
+        "category": "Family Centered Care",
+        "text": "Family-Centered Care implies:",
+        "options": ["The family does all the work", "Parents are visitors", "Collaboration between healthcare staff and the family as partners in care", "Family is excluded from rounds"],
+        "correctAnswer": 2,
+        "explanation": "It recognizes the family as the constant in the child's life and partners with them in decision-making and care."
+    }
+]
+
 # -----------------------------------------------------------------------------
 # MAPPINGS
 # -----------------------------------------------------------------------------
@@ -774,18 +1110,28 @@ ASSESSMENT_MODULES = {
     "Patient Safety Guidelines": PATIENT_SAFETY_QUESTIONS,
     "Patient Confidentiality": PATIENT_CONFIDENTIALITY_QUESTIONS,
     "Laboratory Quality Management Competency Assessment": LAB_QUALITY_QUESTIONS,
-    "Radiology Imaging Quality Management Competency Assessment": RADIOLOGY_QUALITY_QUESTIONS
+    "Radiology Imaging Quality Management Competency Assessment": RADIOLOGY_QUALITY_QUESTIONS,
+    "Critical Care Nursing Competency Assessment": CRITICAL_CARE_QUESTIONS,
+    "Intensive Care Competency Assessment": INTENSIVE_CARE_QUESTIONS,
+    "Emergency Care Competency Assessment": EMERGENCY_CARE_QUESTIONS,
+    "Pediatric Nursing Care Competency Assessment": PEDIATRIC_NURSING_QUESTIONS
 }
 
 # Map Roles to Eligible Assessment Modules
 ROLE_ACCESS = {
     "Infection Control Nurse (ICN)": [
         "Infection Control Guidelines",
-        "Patient Safety Guidelines"
+        "Patient Safety Guidelines",
+        "Critical Care Nursing Competency Assessment",
+        "Intensive Care Competency Assessment"
     ],
     "Staff Nurse": [
         "Infection Control Guidelines",
-        "Patient Safety Guidelines"
+        "Patient Safety Guidelines",
+        "Critical Care Nursing Competency Assessment",
+        "Intensive Care Competency Assessment",
+        "Emergency Care Competency Assessment",
+        "Pediatric Nursing Care Competency Assessment"
     ],
     "Physician / Doctor": [
         "Medication Safety Guidelines",
