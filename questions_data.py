@@ -587,6 +587,174 @@ PATIENT_CONFIDENTIALITY_QUESTIONS = [
     }
 ]
 
+# 7. LABORATORY QUALITY MANAGEMENT (For Lab Technicians)
+LAB_QUALITY_QUESTIONS = [
+    {
+        "id": 1,
+        "category": "Quality Control",
+        "text": "What is the primary purpose of Internal Quality Control (IQC) in the laboratory?",
+        "options": ["To check if the staff is working", "To ensure daily precision and accuracy of test results", "To save reagents", "To impress the patients"],
+        "correctAnswer": 1,
+        "explanation": "IQC is performed daily to monitor the precision and accuracy of the analytical phase."
+    },
+    {
+        "id": 2,
+        "category": "Pre-Analytical",
+        "text": "Which of the following is a common cause of pre-analytical error?",
+        "options": ["Instrument malfunction", "Wrong calculation", "Hemolyzed sample due to improper collection", "Reporting wrong units"],
+        "correctAnswer": 2,
+        "explanation": "Hemolysis during collection is a pre-analytical error that can significantly alter test results (e.g., Potassium)."
+    },
+    {
+        "id": 3,
+        "category": "Critical Values",
+        "text": "What is the immediate action required when a 'Critical Value' is obtained?",
+        "options": ["Repeat the test next week", "Inform the clinician/nurse immediately and document the read-back", "Mail the report", "Ignore it if the patient looks fine"],
+        "correctAnswer": 1,
+        "explanation": "Critical values indicate a life-threatening state; immediate notification and read-back verification are mandatory."
+    },
+    {
+        "id": 4,
+        "category": "External Quality Assurance",
+        "text": "What does EQAS (External Quality Assurance Scheme) assess?",
+        "options": ["The lab's performance compared to other peer laboratories", "The cost of tests", "The speed of the internet", "The attendance of staff"],
+        "correctAnswer": 0,
+        "explanation": "EQAS involves blinded samples sent by an external agency to compare the lab's accuracy against peer group performance."
+    },
+    {
+        "id": 5,
+        "category": "Sample Rejection",
+        "text": "A blood sample for coagulation studies (PT/APTT) is collected in a simplified tube but is clotted. What should you do?",
+        "options": ["Run the test anyway", "Try to remove the clot", "Reject the sample and request a recollect", "Add heparin"],
+        "correctAnswer": 2,
+        "explanation": "Clotted samples in coagulation tubes invalidate the results. The sample must be rejected and recollected."
+    },
+    {
+        "id": 6,
+        "category": "Calibration",
+        "text": "When should instrument calibration typically be performed?",
+        "options": ["Only when the machine breaks", "According to manufacturer guidelines or when QC fails repeatedly", "Once every 10 years", "Never"],
+        "correctAnswer": 1,
+        "explanation": "Calibration establishes the relationship between instrument signal and analyte concentration and is needed regularly or when QC shifts."
+    },
+    {
+        "id": 7,
+        "category": "Turnaround Time",
+        "text": "Turnaround Time (TAT) is defined as:",
+        "options": ["Time from sample collection to report dispatch", "Time taken to eat lunch", "Time taken to print the report", "Time the patient waits in the lobby"],
+        "correctAnswer": 0,
+        "explanation": "TAT is a key quality indicator measuring the total time from request/collection to result availability."
+    },
+    {
+        "id": 8,
+        "category": "Reagent Management",
+        "text": "What is the 'First-In, First-Out' (FIFO) principle in reagent inventory?",
+        "options": ["Use the newest reagents first", "Use the oldest stock (closest to expiry) first", "Use whatever is closest to your hand", "Don't use reagents"],
+        "correctAnswer": 1,
+        "explanation": "FIFO ensures that older stock is used before it expires, reducing wastage."
+    },
+    {
+        "id": 9,
+        "category": "Biomedical Waste",
+        "text": "In which color bag should blood-contaminated waste (e.g., cotton, gauze) be segregated?",
+        "options": ["Black", "Blue", "Yellow", "Red"],
+        "correctAnswer": 2,
+        "explanation": "Yellow bags are typically used for infectious waste like human anatomical waste and items contaminated with blood/body fluids (varies by region, but standard medical waste color)."
+    },
+    {
+        "id": 10,
+        "category": "Maintenance",
+        "text": "Why is a daily maintenance log important?",
+        "options": ["To make the lab look busy", "To provide a trail of evidence that equipment is functioning correctly", "It is not important", "To use up paper"],
+        "correctAnswer": 1,
+        "explanation": "Maintenance logs prove that equipment was checked and safe to use, which is critical for accreditation and quality assurance."
+    }
+]
+
+# 8. RADIOLOGY IMAGING QUALITY MANAGEMENT (For Radiology Technicians)
+RADIOLOGY_QUALITY_QUESTIONS = [
+    {
+        "id": 1,
+        "category": "Image Quality",
+        "text": "What is the most common cause of a blurred X-ray image?",
+        "options": ["Patient motion", "Old film", "High kVp", "Low mAs"],
+        "correctAnswer": 0,
+        "explanation": "Patient movement during exposure is the leading cause of image blur/unsharpness."
+    },
+    {
+        "id": 2,
+        "category": "Radiation Safety (ALARA)",
+        "text": "To improve image quality while following ALARA, you should use:",
+        "options": ["The highest possible dose", "Collimation to restrict the beam to the area of interest", "No shielding", "Multiple exposures"],
+        "correctAnswer": 1,
+        "explanation": "Collimation improves image contrast by reducing scatter and reduces patient dose, aligning with ALARA."
+    },
+    {
+        "id": 3,
+        "category": "Artifacts",
+        "text": "What does a 'jewelry artifact' look like on an X-ray?",
+        "options": ["A black hole", "A white (radiopaque) shadow obscuring anatomy", "A blur", "A red spot"],
+        "correctAnswer": 1,
+        "explanation": "Metal objects like jewelry block X-rays, appearing white and potentially hiding pathology."
+    },
+    {
+        "id": 4,
+        "category": "Patient Identification",
+        "text": "Before performing an X-ray, you notice the request form name does not match the patient's wristband. What do you do?",
+        "options": ["Do the X-ray anyway", "Change the name on the form yourself", "Stop and resolve the discrepancy before proceeding", "Ask the patient if they have a nickname"],
+        "correctAnswer": 2,
+        "explanation": "Correct patient identification is critical. Any discrepancy must be resolved before exposure."
+    },
+    {
+        "id": 5,
+        "category": "MRI Safety",
+        "text": "Which of the following is strictly prohibited in the MRI magnet room (Zone IV)?",
+        "options": ["Cotton clothing", "Ferromagnetic metal objects (e.g., oxygen tanks, scissors)", "Plastic cups", "Paper forms"],
+        "correctAnswer": 1,
+        "explanation": "The powerful magnet can turn ferromagnetic objects into dangerous projectiles."
+    },
+    {
+        "id": 6,
+        "category": "Pregnancy Screening",
+        "text": "What is the standard protocol for female patients of childbearing age before an X-ray of the abdomen/pelvis?",
+        "options": ["Ask about Last Menstrual Period (LMP) and possibility of pregnancy", "Assume they are not pregnant", "Only ask if they look pregnant", "X-rays are safe for all pregnancies"],
+        "correctAnswer": 0,
+        "explanation": "Screening for pregnancy is essential to prevent accidental fetal radiation exposure."
+    },
+    {
+        "id": 7,
+        "category": "Reject Analysis",
+        "text": "What is the purpose of a Reject Analysis Program?",
+        "options": ["To fire technicians who make mistakes", "To identify reasons for repeated exams and reduce unnecessary radiation/cost", "To save digital space", "To recycle films"],
+        "correctAnswer": 1,
+        "explanation": "Analyzing rejected/repeated images helps identify training needs or equipment issues to improve quality."
+    },
+    {
+        "id": 8,
+        "category": "Contrast Safety",
+        "text": "Before administering IV contrast media, what kidney function test is commonly checked?",
+        "options": ["Liver enzymes", "Creatinine / eGFR", "Cholesterol", "Blood sugar"],
+        "correctAnswer": 1,
+        "explanation": "Creatinine/eGFR levels indicate kidney function; poor function increases the risk of Contrast-Induced Nephropathy."
+    },
+    {
+        "id": 9,
+        "category": "PPE Maintenance",
+        "text": "How often should lead aprons be checked for cracks/integrity?",
+        "options": ["Never", "Annually (or as per policy) via fluoroscopy or tactile inspection", "Every day", "Only when they look torn"],
+        "correctAnswer": 1,
+        "explanation": "Regular inspection ensures the lead shielding is intact and providing protection."
+    },
+    {
+        "id": 10,
+        "category": "Infection Control",
+        "text": "After an X-ray on a patient with a contact isolation infection, what should be done to the cassette/detector?",
+        "options": ["Wipe it with an approved disinfectant", "Put it back in the pile", "Wash it with soap and water", "Leave it in the sun"],
+        "correctAnswer": 0,
+        "explanation": "Equipment in contact with patients must be disinfected between uses to prevent cross-contamination."
+    }
+]
+
 # -----------------------------------------------------------------------------
 # MAPPINGS
 # -----------------------------------------------------------------------------
@@ -604,7 +772,9 @@ ASSESSMENT_MODULES = {
     "Medication Safety Guidelines": MEDICATION_SAFETY_QUESTIONS,
     "Medical Records Documentation": MEDICAL_RECORDS_QUESTIONS,
     "Patient Safety Guidelines": PATIENT_SAFETY_QUESTIONS,
-    "Patient Confidentiality": PATIENT_CONFIDENTIALITY_QUESTIONS
+    "Patient Confidentiality": PATIENT_CONFIDENTIALITY_QUESTIONS,
+    "Laboratory Quality Management Competency Assessment": LAB_QUALITY_QUESTIONS,
+    "Radiology Imaging Quality Management Competency Assessment": RADIOLOGY_QUALITY_QUESTIONS
 }
 
 # Map Roles to Eligible Assessment Modules
@@ -624,6 +794,16 @@ ROLE_ACCESS = {
     ],
     "Technician / Allied Health": [
         "Basic Infection Control (Technician)",
+        "Radiation Safety Guidelines",
+        "Patient Safety Guidelines"
+    ],
+    "Laboratory Technician": [
+        "Laboratory Quality Management Competency Assessment",
+        "Basic Infection Control (Technician)",
+        "Patient Safety Guidelines"
+    ],
+    "Radiology & Imageology Technician": [
+        "Radiology Imaging Quality Management Competency Assessment",
         "Radiation Safety Guidelines",
         "Patient Safety Guidelines"
     ],

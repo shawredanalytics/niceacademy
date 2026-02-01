@@ -288,6 +288,8 @@ def show_landing_page():
             "Infection Control Nurse (ICN)",
             "Staff Nurse",
             "Physician / Doctor",
+            "Laboratory Technician",
+            "Radiology & Imageology Technician",
             "Technician / Allied Health",
             "Nursing Assistant / Support Staff",
             "Administrative Personnel",
