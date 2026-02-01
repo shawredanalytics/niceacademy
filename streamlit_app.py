@@ -3,6 +3,12 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from datetime import datetime
+import time
+import io
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+from reportlab.lib import colors
+from reportlab.lib.units import inch
 from questions_data import ASSESSMENT_MODULES, ROLE_ACCESS
 
 # Page Config
@@ -34,13 +40,15 @@ st.markdown("""
         border-left: 5px solid #0066cc;
         margin-bottom: 20px;
     }
-    .success-score {
-        color: #28a745;
+    .timer-box {
+        font-size: 1.2rem;
         font-weight: bold;
-    }
-    .fail-score {
-        color: #dc3545;
-        font-weight: bold;
+        color: #d9534f;
+        padding: 10px;
+        border: 2px solid #d9534f;
+        border-radius: 5px;
+        text-align: center;
+        margin-bottom: 10px;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -55,11 +63,15 @@ def reset_app():
     st.session_state.assessment_started = False
     st.session_state.user_info = {}
     st.session_state.current_questions = []
+    if 'q_start_time' in st.session_state:
+        del st.session_state.q_start_time
 
 def start_assessment(name, role, hospital, assessment_type):
     # Get the questions for the selected assessment type
-    # Default to Infection Control if not found
-    questions = ASSESSMENT_MODULES.get(assessment_type, ASSESSMENT_MODULES["Infection Control Guidelines"])
+    all_questions = ASSESSMENT_MODULES.get(assessment_type, ASSESSMENT_MODULES["Infection Control Guidelines"])
+    
+    # Limit to 10 questions as requested
+    questions = all_questions[:10]
     
     st.session_state.user_info = {
         "name": name,
@@ -70,11 +82,83 @@ def start_assessment(name, role, hospital, assessment_type):
     }
     st.session_state.current_questions = questions
     st.session_state.assessment_started = True
+    st.session_state.q_start_time = time.time() # Start timer for first question
     st.rerun()
+
+def generate_certificate(name, role, module, score_str, date_str):
+    buffer = io.BytesIO()
+    c = canvas.Canvas(buffer, pagesize=letter)
+    width, height = letter
+    
+    # Border
+    c.setStrokeColor(colors.darkblue)
+    c.setLineWidth(5)
+    c.rect(0.5*inch, 0.5*inch, width-1*inch, height-1*inch)
+    
+    # Header
+    c.setFont("Helvetica-Bold", 30)
+    c.setFillColor(colors.darkblue)
+    c.drawCentredString(width/2, height - 2*inch, "NICE ACADEMY")
+    
+    c.setFont("Helvetica", 20)
+    c.setFillColor(colors.black)
+    c.drawCentredString(width/2, height - 2.8*inch, "Certificate of Competency")
+    
+    c.setFont("Helvetica", 14)
+    c.drawCentredString(width/2, height - 3.5*inch, "This certifies that")
+    
+    # Name
+    c.setFont("Helvetica-Bold", 24)
+    c.drawCentredString(width/2, height - 4.2*inch, name)
+    
+    # Details
+    c.setFont("Helvetica", 14)
+    c.drawCentredString(width/2, height - 5*inch, f"has successfully completed the self-assessment for")
+    
+    c.setFont("Helvetica-Bold", 18)
+    c.drawCentredString(width/2, height - 5.5*inch, module)
+    
+    c.setFont("Helvetica", 14)
+    c.drawCentredString(width/2, height - 6.5*inch, f"Role: {role}")
+    c.drawCentredString(width/2, height - 7*inch, f"Date: {date_str}")
+    c.drawCentredString(width/2, height - 7.5*inch, f"Score: {score_str}")
+    
+    # Footer
+    c.setFont("Helvetica-Oblique", 10)
+    c.drawCentredString(width/2, 1*inch, "This is a computer-generated self-assessment certificate.")
+    
+    c.save()
+    buffer.seek(0)
+    return buffer.getvalue()
 
 # -----------------------------------------------------------------------------
 # APP COMPONENTS
 # -----------------------------------------------------------------------------
+
+def show_about_page():
+    # Logo area
+    col_logo_1, col_logo_2, col_logo_3 = st.columns([1, 1, 1])
+    with col_logo_2:
+        try:
+            st.image("assets/logo.png", use_container_width=True)
+        except Exception:
+            pass
+
+    st.markdown('<h1 class="main-header">About NICE Academy</h1>', unsafe_allow_html=True)
+    
+    st.markdown("""
+    ### Healthcare Professionals Skill Development Academy
+    
+    **NICE Academy** is a dedicated healthcare professionals skill development institution committed to elevating clinical expertise, operational excellence, and leadership capabilities across the healthcare sector. By blending evidence-based medical knowledge with practical, real-world training, NICE Academy empowers healthcare practitioners, administrators, and support staff to deliver high-quality, patient-centric care. 
+    
+    ---
+    
+    ### Mission 
+    To enhance the competency, confidence, and career readiness of healthcare professionals through structured skill development programs that align with industry standards, emerging technologies, and best practices. 
+    
+    ### Vision 
+    To be a leading center of excellence in healthcare education, fostering continuous lifelong learning and contributing to improved health outcomes globally.
+    """)
 
 def show_landing_page():
     st.markdown('<h1 class="main-header">NICE Academy</h1>', unsafe_allow_html=True)
@@ -85,10 +169,16 @@ def show_landing_page():
         st.info("""
         **Welcome!** This portal allows healthcare professionals to assess their knowledge of key safety protocols.
         
-        Please select your role to view the available competency assessments.
+        **Assessment Rules:**
+        - **10 Questions** per module.
+        - **15 Seconds** time limit per question.
+        - **+1** for Correct Answer.
+        - **-1** for Wrong Answer (Negative Marking).
+        - **0** for Unanswered/Timeout.
+        - **Pass Mark:** 75%.
         """)
         
-        # Registration Inputs (Outside form to allow dynamic updates)
+        # Registration Inputs
         name = st.text_input("Full Name", placeholder="e.g. Jane Doe, RN")
         
         # Role Selection
@@ -104,8 +194,6 @@ def show_landing_page():
             "Other"
         ]
         
-        # If we have a role in session state (from previous run), default to it?
-        # Standard selectbox works fine
         role = st.selectbox("Role / Designation", role_options)
         
         hospital = st.text_input("Hospital / Organization (Optional)", placeholder="e.g. General Hospital")
@@ -115,7 +203,6 @@ def show_landing_page():
         # Dynamic Assessment Selection based on Role
         available_assessments = []
         if role != "Select your role...":
-            # Get eligible assessments from mapping, default to "Other" list if not found
             available_assessments = ROLE_ACCESS.get(role, ROLE_ACCESS["Other"])
             
             st.markdown(f"**Available Assessments for {role}:**")
@@ -142,26 +229,40 @@ def show_landing_page():
 
 def show_assessment_page():
     questions = st.session_state.current_questions
+    q_index = st.session_state.current_question
+    q_data = questions[q_index]
     
+    # Initialize timer if not set (redundant check if set in start_assessment, but safe)
+    if 'q_start_time' not in st.session_state:
+        st.session_state.q_start_time = time.time()
+        
     # Sidebar Info
     with st.sidebar:
+        try:
+            st.image("assets/logo.png", use_container_width=True)
+        except Exception:
+            pass
+            
         st.write(f"**Candidate:** {st.session_state.user_info['name']}")
-        st.write(f"**Role:** {st.session_state.user_info['role']}")
         st.write(f"**Module:** {st.session_state.user_info['assessment_type']}")
         
         progress = st.session_state.current_question / len(questions)
         st.progress(progress)
         st.caption(f"Question {st.session_state.current_question + 1} of {len(questions)}")
         
+        st.markdown("---")
+        st.warning("⚠️ **Timer Active:** You have 15 seconds per question.")
+        
         if st.button("Quit Assessment"):
             reset_app()
             st.rerun()
 
-    # Question Display
-    q_index = st.session_state.current_question
-    q_data = questions[q_index]
-    
+    # Main Question Area
     st.markdown(f"### Question {q_index + 1}")
+    
+    # Visual Timer Hint (Static)
+    st.markdown('<div class="timer-box">⏱️ 15 Seconds Limit</div>', unsafe_allow_html=True)
+
     st.markdown(f"**Category:** {q_data['category']}")
     
     st.markdown(f"""
@@ -171,123 +272,157 @@ def show_assessment_page():
     """, unsafe_allow_html=True)
     
     # Options
-    current_answer = st.session_state.answers.get(q_index, None)
+    # Use a unique key per question to reset selection
     selected_option = st.radio(
         "Select your answer:",
         q_data['options'],
-        index=current_answer if current_answer is not None else None,
         key=f"q_{q_index}",
-        label_visibility="collapsed"
+        index=None
     )
     
     st.markdown("---")
     
     # Navigation
     col1, col2 = st.columns([1, 1])
+    
+    # Disable Previous Button for timed assessment integrity
     with col1:
-        if st.button("⬅️ Previous", disabled=q_index == 0, use_container_width=True):
-            st.session_state.current_question -= 1
-            st.rerun()
+        st.button("⬅️ Previous", disabled=True, use_container_width=True, help="Navigation is forward-only for timed assessments.")
             
     with col2:
         is_last = q_index == len(questions) - 1
         btn_text = "Submit Assessment 🏁" if is_last else "Next ➡️"
         
         if st.button(btn_text, use_container_width=True):
-            # Save answer
-            ans_idx = q_data['options'].index(selected_option) if selected_option else None
+            # Check Timer
+            elapsed_time = time.time() - st.session_state.q_start_time
             
-            if ans_idx is not None:
-                st.session_state.answers[q_index] = ans_idx
-                if not is_last:
-                    st.session_state.current_question += 1
-                    st.rerun()
-                else:
-                    st.session_state.submitted = True
-                    st.rerun()
+            if elapsed_time > 15:
+                # Timeout case
+                st.session_state.answers[q_index] = "TIMEOUT"
+                st.toast(f"Question {q_index+1} timed out! Recorded as unanswered.", icon="⏳")
             else:
-                st.warning("Please select an answer before proceeding.")
+                # Normal submission
+                if selected_option:
+                    ans_idx = q_data['options'].index(selected_option)
+                    st.session_state.answers[q_index] = ans_idx
+                else:
+                    # User clicked Next without selecting (treat as unanswered/skip)
+                    st.session_state.answers[q_index] = None
+            
+            # Move to next
+            if not is_last:
+                st.session_state.current_question += 1
+                st.session_state.q_start_time = time.time() # Reset timer for next question
+                st.rerun()
+            else:
+                st.session_state.submitted = True
+                st.rerun()
 
 def show_results_page():
     questions = st.session_state.current_questions
+    
+    # Logo area
+    col_logo_1, col_logo_2, col_logo_3 = st.columns([1, 1, 1])
+    with col_logo_2:
+        try:
+            st.image("assets/logo.png", use_container_width=True)
+        except Exception:
+            pass
+
     st.markdown('<h1 class="main-header">Assessment Report</h1>', unsafe_allow_html=True)
     
     # Calculate Score
     total_q = len(questions)
+    score = 0
     correct_count = 0
-    category_scores = {}
+    wrong_count = 0
+    unanswered_count = 0
     
     for i, q in enumerate(questions):
         user_ans = st.session_state.answers.get(i)
-        is_correct = (user_ans == q['correctAnswer'])
-        if is_correct:
+        
+        if user_ans == "TIMEOUT" or user_ans is None:
+            unanswered_count += 1
+            # 0 marks for unanswered
+        elif user_ans == q['correctAnswer']:
+            score += 1
             correct_count += 1
-            
-        # Category breakdown
-        cat = q['category']
-        if cat not in category_scores:
-            category_scores[cat] = {'correct': 0, 'total': 0}
-        category_scores[cat]['total'] += 1
-        if is_correct:
-            category_scores[cat]['correct'] += 1
+        else:
+            score -= 1 # Negative marking
+            wrong_count += 1
 
-    percentage = (correct_count / total_q) * 100
-    passed = percentage >= 80  # Stricter pass for professional competency
+    # Max possible score is total_q (assuming all correct = +1 each)
+    # Pass mark is 75%
+    percentage = (score / total_q) * 100
+    passed = percentage >= 75
     
     # Summary Card
     col1, col2 = st.columns([1, 2])
     
     with col1:
-        st.metric("Total Score", f"{percentage:.1f}%", f"{correct_count}/{total_q}")
+        st.metric("Final Score", f"{percentage:.1f}%", f"{score}/{total_q} Points")
         if passed:
             st.success("Result: COMPETENT ✅")
+            st.balloons()
         else:
             st.error("Result: NEEDS IMPROVEMENT ⚠️")
             
     with col2:
         st.write(f"**Name:** {st.session_state.user_info['name']}")
         st.write(f"**Role:** {st.session_state.user_info['role']}")
-        st.write(f"**Assessment Module:** {st.session_state.user_info['assessment_type']}")
+        st.write(f"**Module:** {st.session_state.user_info['assessment_type']}")
         st.write(f"**Date:** {st.session_state.user_info['date']}")
-        if st.session_state.user_info['hospital']:
-            st.write(f"**Organization:** {st.session_state.user_info['hospital']}")
+        
+        st.markdown(f"""
+        - Correct Answers: **{correct_count}** (+{correct_count})
+        - Wrong Answers: **{wrong_count}** (-{wrong_count})
+        - Unanswered/Timeout: **{unanswered_count}** (0)
+        """)
 
     st.markdown("---")
     
-    # Category Performance Chart
-    st.subheader("Competency by Domain")
-    
-    cat_data = []
-    for cat, stats in category_scores.items():
-        cat_data.append({
-            "Category": cat,
-            "Score (%)": (stats['correct'] / stats['total']) * 100,
-            "Questions": stats['total']
-        })
-    
-    if cat_data:
-        df_cat = pd.DataFrame(cat_data)
-        fig = px.bar(df_cat, x="Score (%)", y="Category", orientation='h', 
-                     title="Performance Breakdown", 
-                     range_x=[0, 100], 
-                     color="Score (%)",
-                     color_continuous_scale=["red", "yellow", "green"])
-        st.plotly_chart(fig, use_container_width=True)
+    # Certificate Download
+    if passed:
+        st.subheader("🎉 Congratulations!")
+        st.write("You have successfully completed the competency assessment.")
+        
+        cert_data = generate_certificate(
+            st.session_state.user_info['name'],
+            st.session_state.user_info['role'],
+            st.session_state.user_info['assessment_type'],
+            f"{percentage:.1f}%",
+            st.session_state.user_info['date']
+        )
+        
+        st.download_button(
+            label="📜 Download Certificate",
+            data=cert_data,
+            file_name="Competency_Certificate.pdf",
+            mime="application/pdf",
+            use_container_width=True
+        )
     else:
-        st.info("No category data available.")
+        st.warning("You did not meet the required pass mark of 75%. Please review the guidelines and try again.")
 
     # Detailed Review
+    st.markdown("---")
     with st.expander("View Detailed Answer Key"):
         for i, q in enumerate(questions):
             user_ans = st.session_state.answers.get(i)
-            correct = user_ans == q['correctAnswer']
-            icon = "✅" if correct else "❌"
             
-            st.markdown(f"**{i+1}. {q['text']}** {icon}")
-            if not correct:
-                st.markdown(f"Your Answer: *{q['options'][user_ans] if user_ans is not None else 'Skipped'}*")
+            if user_ans == "TIMEOUT" or user_ans is None:
+                st.markdown(f"**{i+1}. {q['text']}** ⏳ *Unanswered/Timeout*")
                 st.markdown(f"Correct Answer: **{q['options'][q['correctAnswer']]}**")
                 st.info(f"💡 {q['explanation']}")
+            else:
+                correct = user_ans == q['correctAnswer']
+                icon = "✅" if correct else "❌"
+                st.markdown(f"**{i+1}. {q['text']}** {icon}")
+                if not correct:
+                    st.markdown(f"Your Answer: *{q['options'][user_ans]}*")
+                    st.markdown(f"Correct Answer: **{q['options'][q['correctAnswer']]}**")
+                    st.info(f"💡 {q['explanation']}")
             st.markdown("---")
 
     # Restart
@@ -315,7 +450,24 @@ def main():
 
     # Routing
     if not st.session_state.assessment_started:
-        show_landing_page()
+        # Sidebar Navigation for Home/About
+        with st.sidebar:
+            try:
+                st.image("assets/logo.png", use_container_width=True)
+            except Exception:
+                pass
+            
+            st.markdown("### Navigation")
+            page = st.radio("Go to", ["Home", "About Us"])
+            
+            st.markdown("---")
+            st.info("Select 'Home' to start an assessment.")
+
+        if page == "Home":
+            show_landing_page()
+        elif page == "About Us":
+            show_about_page()
+            
     elif not st.session_state.submitted:
         show_assessment_page()
     else:

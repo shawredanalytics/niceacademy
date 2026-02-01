@@ -98,6 +98,11 @@ out
 # Serverless directories
 .serverless/
 
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
 # FuseBox cache
 .fusebox/
 
