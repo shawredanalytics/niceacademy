@@ -279,7 +279,7 @@ def show_landing_page():
         """)
         
         # Registration Inputs
-        name = st.text_input("Full Name", placeholder="e.g. Jane Doe, RN")
+        name = st.text_input("Full Name of the Healthcare Professional", placeholder="e.g. Jane Doe, RN")
         email = st.text_input("Email ID", placeholder="e.g. jane.doe@example.com")
         
         # Role Selection
