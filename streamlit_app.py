@@ -161,9 +161,9 @@ def generate_certificate(name, role, module, score_str, date_str):
     # Draw Logo if exists
     try:
         logo_path = "assets/logo.png"
-        # Draw logo centered at top, width=2 inch, preserve aspect ratio
-        c.drawImage(logo_path, width/2 - 1*inch, height - 2.5*inch, width=2*inch, height=1*inch, preserveAspectRatio=True, mask='auto')
-        header_y_offset = 2.8 * inch # Push text down
+        # Draw logo centered at top, width=4 inch, preserve aspect ratio
+        c.drawImage(logo_path, width/2 - 2*inch, height - 3.5*inch, width=4*inch, height=2*inch, preserveAspectRatio=True, mask='auto')
+        header_y_offset = 3.8 * inch # Push text down
     except Exception:
         header_y_offset = 2 * inch # Default if no logo
         c.setFont("Helvetica-Bold", 30)
