@@ -53,6 +53,9 @@ st.markdown("""
         text-align: center;
         margin-bottom: 10px;
     }
+    [data-testid="stSidebar"] {
+        background-color: #ffffff;
+    }
     </style>
 """, unsafe_allow_html=True)
 
