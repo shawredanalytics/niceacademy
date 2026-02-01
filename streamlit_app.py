@@ -72,8 +72,9 @@ def start_assessment(name, role, hospital, assessment_type):
     # Get the questions for the selected assessment type
     all_questions = ASSESSMENT_MODULES.get(assessment_type, ASSESSMENT_MODULES["Infection Control Guidelines"])
     
-    # Limit to 10 questions as requested
-    questions = all_questions[:10]
+    # Limit to 10 questions as requested, randomized to ensure variety
+    # Use random.sample to get unique questions for this session
+    questions = random.sample(all_questions, min(10, len(all_questions)))
     
     st.session_state.user_info = {
         "name": name,
