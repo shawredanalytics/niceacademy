@@ -1,5 +1,6 @@
 
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 import plotly.express as px
 from datetime import datetime
@@ -10,6 +11,7 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.lib.units import inch
 from questions_data import ASSESSMENT_MODULES, ROLE_ACCESS
+from streamlit_autorefresh import st_autorefresh
 
 # Page Config
 st.set_page_config(
@@ -96,36 +98,51 @@ def generate_certificate(name, role, module, score_str, date_str):
     c.rect(0.5*inch, 0.5*inch, width-1*inch, height-1*inch)
     
     # Header
-    c.setFont("Helvetica-Bold", 30)
-    c.setFillColor(colors.darkblue)
-    c.drawCentredString(width/2, height - 2*inch, "NICE ACADEMY")
-    
+    # Draw Logo if exists
+    try:
+        logo_path = "assets/logo.png"
+        # Draw logo centered at top, width=2 inch, preserve aspect ratio
+        c.drawImage(logo_path, width/2 - 1*inch, height - 2.5*inch, width=2*inch, height=1*inch, preserveAspectRatio=True, mask='auto')
+        header_y_offset = 2.8 * inch # Push text down
+    except Exception:
+        header_y_offset = 2 * inch # Default if no logo
+        c.setFont("Helvetica-Bold", 30)
+        c.setFillColor(colors.darkblue)
+        c.drawCentredString(width/2, height - 2*inch, "NICE ACADEMY")
+
     c.setFont("Helvetica", 20)
     c.setFillColor(colors.black)
-    c.drawCentredString(width/2, height - 2.8*inch, "Certificate of Competency")
+    c.drawCentredString(width/2, height - header_y_offset - 0.5*inch, "Certificate of Competency")
     
     c.setFont("Helvetica", 14)
-    c.drawCentredString(width/2, height - 3.5*inch, "This certifies that")
+    c.drawCentredString(width/2, height - header_y_offset - 1.2*inch, "This certifies that")
     
     # Name
     c.setFont("Helvetica-Bold", 24)
-    c.drawCentredString(width/2, height - 4.2*inch, name)
+    c.drawCentredString(width/2, height - header_y_offset - 1.9*inch, name)
     
     # Details
     c.setFont("Helvetica", 14)
-    c.drawCentredString(width/2, height - 5*inch, f"has successfully completed the self-assessment for")
+    c.drawCentredString(width/2, height - header_y_offset - 2.7*inch, f"has successfully completed the self-assessment for")
     
     c.setFont("Helvetica-Bold", 18)
-    c.drawCentredString(width/2, height - 5.5*inch, module)
+    c.drawCentredString(width/2, height - header_y_offset - 3.2*inch, module)
     
     c.setFont("Helvetica", 14)
-    c.drawCentredString(width/2, height - 6.5*inch, f"Role: {role}")
-    c.drawCentredString(width/2, height - 7*inch, f"Date: {date_str}")
-    c.drawCentredString(width/2, height - 7.5*inch, f"Score: {score_str}")
+    c.drawCentredString(width/2, height - header_y_offset - 4.2*inch, f"Role: {role}")
+    c.drawCentredString(width/2, height - header_y_offset - 4.7*inch, f"Date: {date_str}")
+    c.drawCentredString(width/2, height - header_y_offset - 5.2*inch, f"Score: {score_str}")
     
-    # Footer
-    c.setFont("Helvetica-Oblique", 10)
-    c.drawCentredString(width/2, 1*inch, "This is a computer-generated self-assessment certificate.")
+    # Footer (Disclaimer)
+    c.setFont("Helvetica-Oblique", 8)
+    c.setFillColor(colors.gray)
+    
+    disclaimer_y = 1.2 * inch
+    line_height = 0.2 * inch
+    
+    c.drawCentredString(width/2, disclaimer_y, "This is a digital certificate provided to the Healthcare Professional on successful completion of the online competency assessment module.")
+    c.drawCentredString(width/2, disclaimer_y - line_height, "It is advised that the competency assessment is conducted by competent individuals in clinical settings")
+    c.drawCentredString(width/2, disclaimer_y - 2*line_height, "before privileges are provided to the Healthcare Professionals to conduct relevant duties.")
     
     c.save()
     buffer.seek(0)
@@ -167,7 +184,7 @@ def show_landing_page():
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         st.info("""
-        **Welcome!** This portal allows healthcare professionals to assess their knowledge of key safety protocols.
+        **Welcome!** This portal allows healthcare professionals to assess their knowledge of quality systems and key patient safety protocols.
         
         **Assessment Rules:**
         - **10 Questions** per module.
@@ -228,6 +245,9 @@ def show_landing_page():
                 st.error("Please select an Assessment Module.")
 
 def show_assessment_page():
+    # Auto-refresh every 1 second to update timer and check for timeout
+    st_autorefresh(interval=1000, key="assessment_timer")
+
     questions = st.session_state.current_questions
     q_index = st.session_state.current_question
     q_data = questions[q_index]
@@ -235,6 +255,33 @@ def show_assessment_page():
     # Initialize timer if not set (redundant check if set in start_assessment, but safe)
     if 'q_start_time' not in st.session_state:
         st.session_state.q_start_time = time.time()
+
+    # Check for Timeout
+    elapsed = time.time() - st.session_state.q_start_time
+    if elapsed > 15:
+        # Check if user selected something (auto-submit if selected)
+        selected_option = st.session_state.get(f"q_{q_index}")
+        
+        if selected_option:
+            try:
+                ans_idx = q_data['options'].index(selected_option)
+                st.session_state.answers[q_index] = ans_idx
+                st.toast("Time's up! Submitting your selection.", icon="⚠️")
+            except ValueError:
+                st.session_state.answers[q_index] = "TIMEOUT"
+        else:
+            st.session_state.answers[q_index] = "TIMEOUT"
+            st.toast("Time's up! No answer selected.", icon="⏳")
+            
+        # Move to next
+        if q_index + 1 < len(questions):
+            st.session_state.current_question += 1
+            st.session_state.q_start_time = time.time()
+            st.rerun()
+        else:
+            st.session_state.submitted = True
+            st.session_state.end_time = time.time()
+            st.rerun()
         
     # Sidebar Info
     with st.sidebar:
@@ -246,23 +293,64 @@ def show_assessment_page():
         st.write(f"**Candidate:** {st.session_state.user_info['name']}")
         st.write(f"**Module:** {st.session_state.user_info['assessment_type']}")
         
-        progress = st.session_state.current_question / len(questions)
-        st.progress(progress)
-        st.caption(f"Question {st.session_state.current_question + 1} of {len(questions)}")
-        
         st.markdown("---")
-        st.warning("⚠️ **Timer Active:** You have 15 seconds per question.")
         
         if st.button("Quit Assessment"):
             reset_app()
             st.rerun()
 
     # Main Question Area
-    st.markdown(f"### Question {q_index + 1}")
     
-    # Visual Timer Hint (Static)
-    st.markdown('<div class="timer-box">⏱️ 15 Seconds Limit</div>', unsafe_allow_html=True)
+    # NEW: Progress and Timer Header
+    # Calculate remaining time
+    elapsed = time.time() - st.session_state.q_start_time
+    remaining_time = max(0, 15 - int(elapsed))
 
+    col_header1, col_header2 = st.columns([3, 1])
+    
+    with col_header1:
+        st.write(f"**Question {q_index + 1} of {len(questions)}**")
+        progress = (q_index + 1) / len(questions)
+        st.progress(progress)
+        
+    with col_header2:
+        # Visual Countdown Timer using HTML/JS
+        # We use a key to force re-render of the component on every question change or rerun
+        timer_html = f"""
+        <div id="timer_div" style="
+            font-size: 1.2rem; 
+            font-weight: bold; 
+            color: #333; 
+            text-align: center; 
+            border: 2px solid #ddd; 
+            border-radius: 5px; 
+            padding: 5px;
+            background-color: #fff;">
+            ⏱️ <span id="time_left">{remaining_time}</span>s
+        </div>
+        <script>
+            var timeleft = {remaining_time};
+            var timer = setInterval(function(){{
+                if(timeleft <= 0){{
+                    clearInterval(timer);
+                    document.getElementById("time_left").innerHTML = "0";
+                    document.getElementById("timer_div").style.color = "#d9534f"; // Red
+                    document.getElementById("timer_div").style.borderColor = "#d9534f";
+                }} else {{
+                    document.getElementById("time_left").innerHTML = timeleft;
+                    if(timeleft <= 5) {{
+                        document.getElementById("timer_div").style.color = "#d9534f"; // Red warning
+                        document.getElementById("timer_div").style.borderColor = "#d9534f";
+                    }}
+                }}
+                timeleft -= 1;
+            }}, 1000);
+        </script>
+        """
+        components.html(timer_html, height=50)
+
+    st.markdown("---")
+    
     st.markdown(f"**Category:** {q_data['category']}")
     
     st.markdown(f"""
