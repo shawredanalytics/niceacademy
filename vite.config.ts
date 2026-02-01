@@ -12,6 +12,7 @@ export default defineConfig({
     }
   }],
   build: {
-    assetsInlineLimit: 100000000, // Inline all assets up to 100MB
-  },
+      target: 'es2015',
+      assetsInlineLimit: 100000000, // Inline all assets up to 100MB
+    },
 })
