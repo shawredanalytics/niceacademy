@@ -1,6 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
-import os
 
 # Set page config first
 st.set_page_config(
@@ -353,45 +351,8 @@ def run_native_app():
             st.session_state.submitted = False
             st.rerun()
 
-def run_react_app():
-    # Helper to read file safely
-    def read_file(path):
-        try:
-            with open(path, "r", encoding="utf-8") as f:
-                return f.read()
-        except FileNotFoundError:
-            return None
-
-    # Paths
-    build_dir = os.path.join(os.getcwd(), "dist")
-    index_path = os.path.join(build_dir, "index.html")
-
-    # Check artifacts
-    html_content = read_file(index_path)
-
-    if not html_content:
-        st.error(f"Build artifact not found at: {index_path}")
-        st.info("Please switch to 'Basic (Streamlit Native)' mode in the sidebar to use the app.")
-        return
-
-    # Render
-    components.html(html_content, height=1000, scrolling=True)
-
 def main():
-    # Sidebar selector
-    st.sidebar.title("NICE Academy")
-    app_mode = st.sidebar.radio(
-        "Choose Mode:",
-        ["Basic (Streamlit Native)", "Advanced (React App)"],
-        index=0  # Default to Basic to ensure functionality
-    )
-    
-    st.sidebar.info("Use 'Basic' mode for a reliable, text-based experience. Use 'Advanced' for the full interactive experience.")
-    
-    if app_mode == "Basic (Streamlit Native)":
-        run_native_app()
-    else:
-        run_react_app()
+    run_native_app()
 
 if __name__ == "__main__":
     main()
