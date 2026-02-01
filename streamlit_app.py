@@ -19,7 +19,14 @@ def load_frontend():
     index_path = os.path.join(build_dir, "index.html")
 
     if not os.path.exists(index_path):
-        st.error("Build artifact not found. Please run 'npm run build' first.")
+        st.error(f"Build artifact not found at: {index_path}")
+        st.write("Current working directory contents:")
+        st.write(os.listdir(os.getcwd()))
+        if os.path.exists(build_dir):
+            st.write(f"Contents of {build_dir}:")
+            st.write(os.listdir(build_dir))
+        else:
+            st.write(f"Directory {build_dir} does not exist.")
         return
 
     # Read the index.html file
