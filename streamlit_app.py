@@ -94,6 +94,9 @@ def save_result(user_info, score, total_q, passed):
 
 def push_data_to_github():
     try:
+        if not os.path.exists(DATA_FILE):
+             return False, "No data file found to backup."
+
         # Configure Git Identity (Local to this repo)
         subprocess.run(["git", "config", "user.email", "backup-bot@niceacademy.com"], check=True)
         subprocess.run(["git", "config", "user.name", "Backup Bot"], check=True)
@@ -239,7 +242,7 @@ def show_about_page():
 
 def show_landing_page():
     st.markdown('<h1 class="main-header">NICE Academy</h1>', unsafe_allow_html=True)
-    st.markdown('<h2 class="sub-header" style="text-align: center;">Healthcare Professionals Competency Assessment Portal</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="sub-header" style="text-align: center;">Healthcare Professionals Competency Assessment Portal Builder</h2>', unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
