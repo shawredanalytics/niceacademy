@@ -1,8 +1,9 @@
+
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 from datetime import datetime
-from questions_data import ASSESSMENTS
+from questions_data import ASSESSMENT_MODULES, ROLE_ACCESS
 
 # Page Config
 st.set_page_config(
@@ -57,8 +58,8 @@ def reset_app():
 
 def start_assessment(name, role, hospital, assessment_type):
     # Get the questions for the selected assessment type
-    # Default to "Other" (Full Set) if not found, but logic should prevent this
-    questions = ASSESSMENTS.get(assessment_type, ASSESSMENTS["Other"])
+    # Default to Infection Control if not found
+    questions = ASSESSMENT_MODULES.get(assessment_type, ASSESSMENT_MODULES["Infection Control Guidelines"])
     
     st.session_state.user_info = {
         "name": name,
@@ -82,77 +83,62 @@ def show_landing_page():
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         st.info("""
-        **Welcome!** This portal allows healthcare professionals to assess their knowledge of:
-        - Infection Prevention & Control
-        - Standard & Transmission-Based Precautions
-        - Hand Hygiene & PPE Protocols
-        - Patient Safety Standards
+        **Welcome!** This portal allows healthcare professionals to assess their knowledge of key safety protocols.
         
-        Please enter your details to begin the assessment.
+        Please select your role to view the available competency assessments.
         """)
         
-        with st.form("registration_form"):
-            name = st.text_input("Full Name", placeholder="e.g. Jane Doe, RN")
+        # Registration Inputs (Outside form to allow dynamic updates)
+        name = st.text_input("Full Name", placeholder="e.g. Jane Doe, RN")
+        
+        # Role Selection
+        role_options = [
+            "Select your role...",
+            "Infection Control Nurse (ICN)",
+            "Staff Nurse",
+            "Physician / Doctor",
+            "Technician / Allied Health",
+            "Nursing Assistant / Support Staff",
+            "Administrative Personnel",
+            "Student",
+            "Other"
+        ]
+        
+        # If we have a role in session state (from previous run), default to it?
+        # Standard selectbox works fine
+        role = st.selectbox("Role / Designation", role_options)
+        
+        hospital = st.text_input("Hospital / Organization (Optional)", placeholder="e.g. General Hospital")
+        
+        st.markdown("---")
+        
+        # Dynamic Assessment Selection based on Role
+        available_assessments = []
+        if role != "Select your role...":
+            # Get eligible assessments from mapping, default to "Other" list if not found
+            available_assessments = ROLE_ACCESS.get(role, ROLE_ACCESS["Other"])
             
-            # Role Selection
-            role_options = [
-                "Select your role...",
-                "Infection Control Nurse (ICN)",
-                "Staff Nurse",
-                "Physician / Doctor",
-                "Technician / Allied Health",
-                "Nursing Assistant / Support Staff",
-                "Administrative Personnel",
-                "Student",
-                "Other"
-            ]
-            role = st.selectbox("Role / Designation", role_options)
-            
-            hospital = st.text_input("Hospital / Organization (Optional)", placeholder="e.g. General Hospital")
-            
-            # Assessment Module Selection (Auto-select based on role if possible, or let user choose)
-            st.markdown("---")
-            st.markdown("**Select Assessment Module**")
-            
-            # Map role to assessment type for default selection if possible
-            assessment_options = list(ASSESSMENTS.keys())
-            
-            # Create a radio or selectbox for assessment type
-            # We can default it based on the role selected above, but since Streamlit forms 
-            # don't update dynamically until submit/rerun, we'll just let them choose or default to a generic one.
-            # Ideally, we bind this logic after submission, but explicit choice is better for flexibility.
-            
+            st.markdown(f"**Available Assessments for {role}:**")
             assessment_type = st.selectbox(
-                "Choose the assessment module you wish to take:",
-                options=["Match my Role"] + assessment_options,
-                index=0,
-                help="Select 'Match my Role' to automatically assign the assessment based on your designation."
+                "Select Assessment Module",
+                options=available_assessments,
+                help="Select the specific competency assessment you wish to undertake."
             )
-            
-            submitted = st.form_submit_button("Start Assessment", use_container_width=True)
-            
-            if submitted:
-                if name and role != "Select your role...":
-                    # Determine final assessment type
-                    final_assessment = assessment_type
-                    if assessment_type == "Match my Role":
-                        # Try to match role to assessment key
-                        if role in ASSESSMENTS:
-                            final_assessment = role
-                        else:
-                            # Fallback map or default
-                            if "Nurse" in role:
-                                final_assessment = "General Staff Nurse"
-                            elif "Technician" in role or "Allied" in role:
-                                final_assessment = "Technician / Allied Health"
-                            elif "Admin" in role:
-                                final_assessment = "Administrative Personnel"
-                            else:
-                                final_assessment = "Other"
-                    
-                    start_assessment(name, role, hospital, final_assessment)
-                else:
-                    st.error("Please provide your Name and select a Role to proceed.")
+        else:
+            st.warning("Please select a Role to see available assessments.")
+            assessment_type = None
+
+        st.markdown("<br>", unsafe_allow_html=True)
+        
+        if st.button("Start Assessment", use_container_width=True):
+            if name and role != "Select your role..." and assessment_type:
+                start_assessment(name, role, hospital, assessment_type)
+            elif not name:
+                st.error("Please enter your Full Name.")
+            elif role == "Select your role...":
+                st.error("Please select a Role.")
+            elif not assessment_type:
+                st.error("Please select an Assessment Module.")
 
 def show_assessment_page():
     questions = st.session_state.current_questions
