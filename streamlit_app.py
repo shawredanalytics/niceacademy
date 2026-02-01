@@ -348,6 +348,10 @@ def show_assessment_page():
         </script>
         """
         components.html(timer_html, height=50)
+        
+        # Time Consumption Bar (Visual Ticking Clock)
+        time_pct = max(0.0, min(1.0, (15 - elapsed) / 15))
+        st.progress(time_pct)
 
     st.markdown("---")
     
