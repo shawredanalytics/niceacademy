@@ -105,7 +105,10 @@ def push_data_to_github():
         subprocess.run(["git", "config", "user.name", "Backup Bot"], check=True, env=env)
 
         # Pull first to avoid rejection (rebase to keep history clean)
-        subprocess.run(["git", "pull", "--rebase", "origin", "main"], check=False, env=env)
+        # Use full URL to ensure HTTPS is used and avoid SSH/Host key errors
+        repo_url = "https://github.com/shawredanalytics/niceacademy.git"
+        
+        subprocess.run(["git", "pull", "--rebase", repo_url, "main"], check=False, env=env)
 
         # Add the data file
         subprocess.run(["git", "add", DATA_FILE], check=True, env=env)
@@ -120,7 +123,7 @@ def push_data_to_github():
         subprocess.run(["git", "commit", "-m", f"Auto-backup assessment data: {timestamp}"], check=True, env=env)
         
         # Push with detailed error capturing
-        result = subprocess.run(["git", "push", "origin", "main"], capture_output=True, text=True, env=env)
+        result = subprocess.run(["git", "push", repo_url, "main"], capture_output=True, text=True, env=env)
         if result.returncode != 0:
             return False, f"Git Push Failed: {result.stderr}"
             
