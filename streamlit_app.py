@@ -100,8 +100,9 @@ def show_landing_page():
                 "Infection Control Nurse (ICN)",
                 "Staff Nurse",
                 "Physician / Doctor",
+                "Technician / Allied Health",
                 "Nursing Assistant / Support Staff",
-                "Healthcare Administrator",
+                "Administrative Personnel",
                 "Student",
                 "Other"
             ]
@@ -142,6 +143,10 @@ def show_landing_page():
                             # Fallback map or default
                             if "Nurse" in role:
                                 final_assessment = "General Staff Nurse"
+                            elif "Technician" in role or "Allied" in role:
+                                final_assessment = "Technician / Allied Health"
+                            elif "Admin" in role:
+                                final_assessment = "Administrative Personnel"
                             else:
                                 final_assessment = "Other"
                     

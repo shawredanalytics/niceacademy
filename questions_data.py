@@ -173,6 +173,9 @@ STAFF_NURSE_QUESTIONS = [q for q in ICN_QUESTIONS if q['id'] in [1, 2, 3, 5, 6, 
 # Subset for Support Staff (Focus on Hand Hygiene and Basic Safety)
 SUPPORT_STAFF_QUESTIONS = [q for q in ICN_QUESTIONS if q['id'] in [1, 5, 10, 15, 19]]
 
+# Subset for Technicians / Allied Health (Focus on Equipment, PPE, Precautions)
+TECHNICIAN_QUESTIONS = [q for q in ICN_QUESTIONS if q['id'] in [1, 3, 5, 6, 8, 10, 13, 14, 15, 20]]
+
 # Subset for Physicians (Focus on Diagnosis, Pathogens, Antibiotics - using existing relevant ones)
 PHYSICIAN_QUESTIONS = [q for q in ICN_QUESTIONS if q['id'] in [2, 3, 4, 9, 11, 14, 16, 17, 20]]
 
@@ -180,8 +183,9 @@ ASSESSMENTS = {
     "Infection Control Nurse (ICN)": ICN_QUESTIONS,
     "General Staff Nurse": STAFF_NURSE_QUESTIONS,
     "Physician / Doctor": PHYSICIAN_QUESTIONS,
+    "Technician / Allied Health": TECHNICIAN_QUESTIONS,
     "Nursing Assistant / Support Staff": SUPPORT_STAFF_QUESTIONS,
-    "Healthcare Administrator": ICN_QUESTIONS, # Admins might take the full set for audit knowledge
+    "Administrative Personnel": ICN_QUESTIONS, # Admins might take the full set for audit knowledge
     "Student": ICN_QUESTIONS, # Students should learn everything
     "Other": ICN_QUESTIONS # Default to full
 }
