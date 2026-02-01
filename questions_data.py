@@ -1,4 +1,928 @@
 
+# 13. PEDIATRIC MEDICAL CARE (Doctor)
+PEDIATRIC_MEDICAL_CARE_QUESTIONS = [
+    {
+        "id": 1,
+        "category": "Growth",
+        "text": "An infant typically doubles their birth weight by what age?",
+        "options": ["2 months", "4-5 months", "9 months", "12 months"],
+        "correctAnswer": 1,
+        "explanation": "Infants typically double their birth weight by 4-5 months and triple it by 1 year."
+    },
+    {
+        "id": 2,
+        "category": "Respiratory",
+        "text": "The most common cause of bronchiolitis in infants is:",
+        "options": ["Influenza", "Respiratory Syncytial Virus (RSV)", "Adenovirus", "Rhinovirus"],
+        "correctAnswer": 1,
+        "explanation": "RSV is the leading cause of bronchiolitis and pneumonia in children under 1 year of age."
+    },
+    {
+        "id": 3,
+        "category": "Development",
+        "text": "At what age should a child typically begin to walk independently?",
+        "options": ["6-9 months", "9-12 months", "12-15 months", "18-24 months"],
+        "correctAnswer": 2,
+        "explanation": "Most children walk independently between 12 and 15 months."
+    },
+    {
+        "id": 4,
+        "category": "Infectious Disease",
+        "text": "First-line treatment for Acute Otitis Media in a child with no allergies is:",
+        "options": ["Azithromycin", "Amoxicillin", "Ceftriaxone", "Levofloxacin"],
+        "correctAnswer": 1,
+        "explanation": "High-dose Amoxicillin (80-90 mg/kg/day) is the standard first-line therapy."
+    },
+    {
+        "id": 5,
+        "category": "Neurology",
+        "text": "A simple febrile seizure typically lasts less than:",
+        "options": ["5 minutes", "15 minutes", "30 minutes", "1 hour"],
+        "correctAnswer": 1,
+        "explanation": "Simple febrile seizures are generalized, last <15 minutes, and do not recur in 24 hours."
+    },
+    {
+        "id": 6,
+        "category": "Gastroenterology",
+        "text": "The most appropriate initial management for mild to moderate dehydration in children is:",
+        "options": ["IV fluids", "Oral Rehydration Therapy (ORT)", "NPO", "Fruit juice"],
+        "correctAnswer": 1,
+        "explanation": "ORT is preferred over IV fluids for mild-moderate dehydration as it is effective and less invasive."
+    },
+    {
+        "id": 7,
+        "category": "Cardiology",
+        "text": "Kawasaki disease is primarily diagnosed based on:",
+        "options": ["Blood culture", "Echocardiogram", "Clinical criteria", "Genetic testing"],
+        "correctAnswer": 2,
+        "explanation": "Diagnosis is clinical: fever >5 days plus 4/5 criteria (rash, conjunctivitis, mucosal changes, extremity changes, adenopathy)."
+    },
+    {
+        "id": 8,
+        "category": "Hematology",
+        "text": "The most common cause of anemia in toddlers is:",
+        "options": ["Sickle cell disease", "Iron deficiency", "Thalassemia", "Folate deficiency"],
+        "correctAnswer": 1,
+        "explanation": "Iron deficiency anemia is the most common nutritional deficiency in children, often due to excessive milk intake."
+    },
+    {
+        "id": 9,
+        "category": "Emergency",
+        "text": "In a choking infant (<1 year), the correct maneuver is:",
+        "options": ["Heimlich maneuver", "Back blows and chest thrusts", "Blind finger sweep", "Abdominal thrusts"],
+        "correctAnswer": 1,
+        "explanation": "For infants, 5 back blows followed by 5 chest thrusts is the standard protocol."
+    },
+    {
+        "id": 10,
+        "category": "Preventive",
+        "text": "The MMR vaccine is typically first administered at:",
+        "options": ["2 months", "6 months", "12-15 months", "4-6 years"],
+        "correctAnswer": 2,
+        "explanation": "The first dose of MMR is recommended at 12-15 months of age."
+    }
+]
+
+# 14. PEDIATRIC EMERGENCY CARE (Doctor)
+PEDIATRIC_EMERGENCY_CARE_QUESTIONS = [
+    {
+        "id": 1,
+        "category": "Resuscitation",
+        "text": "The correct dose of Epinephrine (1:10,000) for pediatric cardiac arrest is:",
+        "options": ["0.01 mg/kg", "0.1 mg/kg", "1 mg/kg", "0.5 mg"],
+        "correctAnswer": 0,
+        "explanation": "Standard pediatric cardiac arrest dose is 0.01 mg/kg (0.1 ml/kg of 1:10,000) IV/IO."
+    },
+    {
+        "id": 2,
+        "category": "Trauma",
+        "text": "The PECARN rule is used to decision make regarding:",
+        "options": ["Abdominal CT in trauma", "Head CT in minor head trauma", "C-spine clearance", "Antibiotics in pneumonia"],
+        "correctAnswer": 1,
+        "explanation": "PECARN rules help identify children at very low risk of clinically important traumatic brain injury to avoid unnecessary CTs."
+    },
+    {
+        "id": 3,
+        "category": "Airway",
+        "text": "Croup (Laryngotracheobronchitis) is characteristically associated with:",
+        "options": ["Drooling", "Steeple sign on X-ray", "Thumb sign on X-ray", "Wheezing"],
+        "correctAnswer": 1,
+        "explanation": "Subglottic narrowing leads to the classic 'Steeple sign' on AP neck radiograph."
+    },
+    {
+        "id": 4,
+        "category": "Shock",
+        "text": "Hypotension in a child with shock is:",
+        "options": ["An early sign", "A late and ominous sign", "Always present", "Irrelevant"],
+        "correctAnswer": 1,
+        "explanation": "Children compensate well; hypotension is a late sign indicating decompensated shock and imminent collapse."
+    },
+    {
+        "id": 5,
+        "category": "Endocrinology",
+        "text": "In Pediatric DKA, rapid correction of hyperglycemia and osmolarity increases risk of:",
+        "options": ["Hypoglycemia", "Cerebral Edema", "Pulmonary Edema", "Renal Failure"],
+        "correctAnswer": 1,
+        "explanation": "Cerebral edema is a feared complication of pediatric DKA treatment."
+    },
+    {
+        "id": 6,
+        "category": "Toxicology",
+        "text": "The antidote for Acetaminophen toxicity is:",
+        "options": ["Naloxone", "N-Acetylcysteine (NAC)", "Flumazenil", "Atropine"],
+        "correctAnswer": 1,
+        "explanation": "NAC replenishes glutathione stores to prevent liver damage."
+    },
+    {
+        "id": 7,
+        "category": "Arrhythmia",
+        "text": "First-line maneuver for stable SVT in a child is:",
+        "options": ["Adenosine", "Synchronized Cardioversion", "Vagal maneuvers", "Amiodarone"],
+        "correctAnswer": 2,
+        "explanation": "Vagal maneuvers (ice to face for infants, blowing in syringe) are first line for stable SVT."
+    },
+    {
+        "id": 8,
+        "category": "Seizure",
+        "text": "First-line benzodiazepine for status epilepticus when IV access is not available is:",
+        "options": ["Oral Diazepam", "IM Midazolam", "IV Lorazepam", "Rectal Paracetamol"],
+        "correctAnswer": 1,
+        "explanation": "IM Midazolam is effective and rapid when IV access is delayed."
+    },
+    {
+        "id": 9,
+        "category": "Anaphylaxis",
+        "text": "The dose of IM Epinephrine for anaphylaxis is:",
+        "options": ["0.01 mg/kg (1:1,000)", "0.01 mg/kg (1:10,000)", "0.1 mg/kg", "0.5 mg fixed"],
+        "correctAnswer": 0,
+        "explanation": "Anaphylaxis requires 0.01 mg/kg of 1:1,000 concentration IM."
+    },
+    {
+        "id": 10,
+        "category": "Fluids",
+        "text": "Initial fluid bolus for pediatric shock is typically:",
+        "options": ["10 ml/kg", "20 ml/kg", "50 ml/kg", "100 ml/kg"],
+        "correctAnswer": 1,
+        "explanation": "20 ml/kg of isotonic crystalloid is the standard initial bolus."
+    }
+]
+
+# 15. BASIC LIFE SUPPORT (BLS) (Doctor)
+BLS_QUESTIONS = [
+    {
+        "id": 1,
+        "category": "CPR",
+        "text": "The compression-to-ventilation ratio for a single rescuer adult CPR is:",
+        "options": ["15:2", "30:2", "50:2", "Continuous compressions"],
+        "correctAnswer": 1,
+        "explanation": "30 compressions to 2 breaths is the standard for single rescuer adult CPR."
+    },
+    {
+        "id": 2,
+        "category": "CPR Quality",
+        "text": "Recommended chest compression depth for an adult is:",
+        "options": ["At least 1 inch", "At least 2 inches (5 cm)", "At least 3 inches", "Depth doesn't matter"],
+        "correctAnswer": 1,
+        "explanation": "Compressions should be at least 2 inches (5 cm) but not more than 2.4 inches (6 cm)."
+    },
+    {
+        "id": 3,
+        "category": "Pediatric CPR",
+        "text": "For 2-rescuer infant/child CPR, the ratio is:",
+        "options": ["30:2", "15:2", "5:1", "10:2"],
+        "correctAnswer": 1,
+        "explanation": "15:2 is recommended for 2-rescuer pediatric CPR to provide more oxygenation."
+    },
+    {
+        "id": 4,
+        "category": "AED",
+        "text": "If a victim has a medication patch where the AED pad needs to go, you should:",
+        "options": ["Apply pad over it", "Remove patch and wipe skin", "Place pad elsewhere", "Do not use AED"],
+        "correctAnswer": 1,
+        "explanation": "Remove the patch and wipe the area clean to prevent burns and ensure conduction."
+    },
+    {
+        "id": 5,
+        "category": "Pulse Check",
+        "text": "Pulse check should take no longer than:",
+        "options": ["5 seconds", "10 seconds", "15 seconds", "20 seconds"],
+        "correctAnswer": 1,
+        "explanation": "Minimize interruptions; check pulse for at least 5 but no more than 10 seconds."
+    },
+    {
+        "id": 6,
+        "category": "Choking",
+        "text": "Universal sign for choking is:",
+        "options": ["Coughing", "Clutching the throat", "Waving hands", "Cyanosis"],
+        "correctAnswer": 1,
+        "explanation": "Clutching the throat with both hands is the universal sign."
+    },
+    {
+        "id": 7,
+        "category": "Rate",
+        "text": "Target compression rate for CPR is:",
+        "options": ["60-80/min", "80-100/min", "100-120/min", ">140/min"],
+        "correctAnswer": 2,
+        "explanation": "100-120 compressions per minute is the optimal rate."
+    },
+    {
+        "id": 8,
+        "category": "Recoil",
+        "text": "Allowing complete chest recoil is important to:",
+        "options": ["Prevent rib fractures", "Allow heart to refill with blood", "Reduce fatigue", "Prevent gastric inflation"],
+        "correctAnswer": 1,
+        "explanation": "Recoil creates negative pressure pulling blood back into the heart (preload)."
+    },
+    {
+        "id": 9,
+        "category": "Assessment",
+        "text": "First step upon finding an unconscious victim is:",
+        "options": ["Start CPR", "Check Pulse", "Verify scene safety", "Call for help"],
+        "correctAnswer": 2,
+        "explanation": "Always verify scene safety first."
+    },
+    {
+        "id": 10,
+        "category": "Ventilation",
+        "text": "Excessive ventilation during CPR can cause:",
+        "options": ["Increased survival", "Gastric inflation and decreased cardiac output", "Better oxygenation", "Hypertension"],
+        "correctAnswer": 1,
+        "explanation": "Hyperventilation increases intrathoracic pressure, decreasing venous return and cardiac output."
+    }
+]
+
+# 16. ADVANCED LIFE SUPPORT (ALS) (Doctor)
+ALS_QUESTIONS = [
+    {
+        "id": 1,
+        "category": "Rhythms",
+        "text": "Which of the following is a shockable rhythm?",
+        "options": ["Asystole", "Pulseless Electrical Activity (PEA)", "Ventricular Fibrillation (VF)", "Sinus Tachycardia"],
+        "correctAnswer": 2,
+        "explanation": "VF and Pulseless VT are shockable rhythms."
+    },
+    {
+        "id": 2,
+        "category": "Medication",
+        "text": "The first drug given for VF/Pulseless VT after shocks is:",
+        "options": ["Amiodarone", "Epinephrine", "Atropine", "Lidocaine"],
+        "correctAnswer": 1,
+        "explanation": "Epinephrine 1mg IV/IO is given every 3-5 minutes."
+    },
+    {
+        "id": 3,
+        "category": "H's and T's",
+        "text": "Which is a reversible cause of cardiac arrest (H's)?",
+        "options": ["Hyperkalemia", "Hypertension", "Hyperthyroidism", "Hypertrophy"],
+        "correctAnswer": 0,
+        "explanation": "Hyperkalemia is one of the H's (Hypovolemia, Hypoxia, H+ ion, Hypo/Hyperkalemia, Hypothermia)."
+    },
+    {
+        "id": 4,
+        "category": "Bradycardia",
+        "text": "First-line drug for symptomatic bradycardia is:",
+        "options": ["Epinephrine infusion", "Dopamine", "Atropine", "Adenosine"],
+        "correctAnswer": 2,
+        "explanation": "Atropine 1mg bolus is the first-line drug for symptomatic bradycardia."
+    },
+    {
+        "id": 5,
+        "category": "Stroke",
+        "text": "The target time from ED arrival to fibrinolytic therapy (door-to-needle) is:",
+        "options": ["30 mins", "45 mins", "60 mins", "90 mins"],
+        "correctAnswer": 2,
+        "explanation": "The goal is 60 minutes or less for eligible patients."
+    },
+    {
+        "id": 6,
+        "category": "Capnography",
+        "text": "Quantitative waveform capnography < 10 mmHg during CPR indicates:",
+        "options": ["Good CPR quality", "Poor CPR quality", "ROSC", "Esophageal intubation"],
+        "correctAnswer": 1,
+        "explanation": "ETCO2 < 10 mmHg indicates low cardiac output/poor compressions; aim for > 10-20 mmHg."
+    },
+    {
+        "id": 7,
+        "category": "Tachycardia",
+        "text": "Management of unstable tachycardia (hypotension, AMS) is:",
+        "options": ["Adenosine", "Beta Blockers", "Synchronized Cardioversion", "Defibrillation"],
+        "correctAnswer": 2,
+        "explanation": "Unstable tachycardia requires immediate synchronized cardioversion."
+    },
+    {
+        "id": 8,
+        "category": "ROSC",
+        "text": "Post-Cardiac Arrest Care includes targeted temperature management to:",
+        "options": ["32-36°C", "37°C", "30°C", "39°C"],
+        "correctAnswer": 0,
+        "explanation": "TTM between 32°C and 36°C for at least 24 hours improves neurological outcomes."
+    },
+    {
+        "id": 9,
+        "category": "Airway",
+        "text": "Once an advanced airway is in place during CPR, breaths should be given:",
+        "options": ["With every compression", "Every 6 seconds (10/min)", "Every 3 seconds", "Pause compressions to breathe"],
+        "correctAnswer": 1,
+        "explanation": "Continuous compressions with 1 breath every 6 seconds."
+    },
+    {
+        "id": 10,
+        "category": "ACS",
+        "text": "Morphine is used in ACS for:",
+        "options": ["Routine analgesia", "Patients with chest pain refractory to nitrates", "Reducing BP", "Increasing heart rate"],
+        "correctAnswer": 1,
+        "explanation": "Morphine is reserved for pain unresponsive to nitrates."
+    }
+]
+
+# 17. INTENSIVE CARE MANAGEMENT (Doctor)
+INTENSIVE_CARE_MANAGEMENT_QUESTIONS = [
+    {
+        "id": 1,
+        "category": "Sepsis",
+        "text": "The 'Hour-1 Bundle' for sepsis includes measuring lactate, obtaining cultures, antibiotics, and:",
+        "options": ["Intubation", "Fluid resuscitation (30ml/kg) for hypotension/lactate >4", "Central line placement", "Blood transfusion"],
+        "correctAnswer": 1,
+        "explanation": "Rapid fluid resuscitation of 30ml/kg crystalloid is required for hypotension or lactate ≥ 4 mmol/L."
+    },
+    {
+        "id": 2,
+        "category": "Ventilation",
+        "text": "In ARDS, the recommended tidal volume strategy is:",
+        "options": ["10-12 ml/kg PBW", "6-8 ml/kg PBW", "4-6 ml/kg PBW", "Volume doesn't matter"],
+        "correctAnswer": 2,
+        "explanation": "Low tidal volume ventilation (4-8 ml/kg Predicted Body Weight) reduces mortality in ARDS."
+    },
+    {
+        "id": 3,
+        "category": "Vasopressors",
+        "text": "First-line vasopressor for septic shock is:",
+        "options": ["Dopamine", "Epinephrine", "Norepinephrine", "Vasopressin"],
+        "correctAnswer": 2,
+        "explanation": "Norepinephrine is the first-choice vasopressor."
+    },
+    {
+        "id": 4,
+        "category": "Sedation",
+        "text": "Daily interruption of sedation ('Sedation Holiday') is associated with:",
+        "options": ["Increased PTSD", "Reduced duration of mechanical ventilation", "Increased VAP", "Patient discomfort"],
+        "correctAnswer": 1,
+        "explanation": "Daily spontaneous awakening trials reduce vent days and ICU length of stay."
+    },
+    {
+        "id": 5,
+        "category": "Delirium",
+        "text": "The recommended tool for monitoring delirium in the ICU is:",
+        "options": ["GCS", "CAM-ICU", "RASS", "MMSE"],
+        "correctAnswer": 1,
+        "explanation": "CAM-ICU (Confusion Assessment Method for ICU) is validated for delirium screening."
+    },
+    {
+        "id": 6,
+        "category": "Nutrition",
+        "text": "Enteral nutrition in mechanically ventilated patients should ideally be started within:",
+        "options": ["24-48 hours", "5-7 days", "After extubation", "Immediately"],
+        "correctAnswer": 0,
+        "explanation": "Early enteral nutrition (within 24-48h) maintains gut integrity and improves outcomes."
+    },
+    {
+        "id": 7,
+        "category": "Prophylaxis",
+        "text": "Stress ulcer prophylaxis is definitely indicated for:",
+        "options": ["All ICU patients", "Patients on mechanical ventilation >48h", "Patients with hypertension", "Patients on antibiotics"],
+        "correctAnswer": 1,
+        "explanation": "Mechanical ventilation >48h and coagulopathy are major risk factors requiring prophylaxis."
+    },
+    {
+        "id": 8,
+        "category": "Hemodynamics",
+        "text": "In septic shock, the initial target Mean Arterial Pressure (MAP) is:",
+        "options": [">60 mmHg", "≥65 mmHg", ">75 mmHg", ">90 mmHg"],
+        "correctAnswer": 1,
+        "explanation": "Target MAP is ≥65 mmHg to ensure organ perfusion."
+    },
+    {
+        "id": 9,
+        "category": "Glycemic Control",
+        "text": "Current guidelines recommend targeting blood glucose levels of:",
+        "options": ["80-110 mg/dL", "140-180 mg/dL", ">200 mg/dL", "<100 mg/dL"],
+        "correctAnswer": 1,
+        "explanation": "A target of 140-180 mg/dL prevents hypoglycemia while controlling hyperglycemia."
+    },
+    {
+        "id": 10,
+        "category": "VAP",
+        "text": "Key component of VAP bundle includes head of bed elevation to:",
+        "options": ["0 degrees", "15 degrees", "30-45 degrees", "90 degrees"],
+        "correctAnswer": 2,
+        "explanation": "Elevation to 30-45 degrees reduces aspiration risk."
+    }
+]
+
+# 18. PEDIATRIC INTENSIVE CARE (Doctor)
+PEDIATRIC_INTENSIVE_CARE_QUESTIONS = [
+    {
+        "id": 1,
+        "category": "Airway",
+        "text": "The formula for estimating uncuffed ETT size in children >2 years is:",
+        "options": ["(Age/4) + 4", "(Age/4) + 3", "(Age/2) + 12", "Age + 1"],
+        "correctAnswer": 0,
+        "explanation": "(Age in years / 4) + 4 is the Cole formula for uncuffed tubes."
+    },
+    {
+        "id": 2,
+        "category": "Shock",
+        "text": "In pediatric septic shock, if IV access fails within 90 seconds (unstable child), you should:",
+        "options": ["Keep trying IV", "Place Central Line", "Place Intraosseous (IO) needle", "Wait for expert"],
+        "correctAnswer": 2,
+        "explanation": "IO access is the standard rapid alternative in emergencies."
+    },
+    {
+        "id": 3,
+        "category": "Ventilation",
+        "text": "Oxygenation Index (OI) is used to assess severity of Peds ARDS. OI = :",
+        "options": ["(MAP x FiO2 x 100) / PaO2", "PaO2 / FiO2", "MAP / PaO2", "FiO2 x PaO2"],
+        "correctAnswer": 0,
+        "explanation": "OI = (Mean Airway Pressure x FiO2 x 100) / PaO2. High OI indicates severe lung injury."
+    },
+    {
+        "id": 4,
+        "category": "Fluids",
+        "text": "Standard maintenance fluid calculation uses the:",
+        "options": ["Holliday-Segar (4-2-1) Rule", "Body Surface Area", "Age x 10", "Flat rate"],
+        "correctAnswer": 0,
+        "explanation": "4ml/kg for 1st 10kg, 2ml/kg for 2nd 10kg, 1ml/kg for remainder."
+    },
+    {
+        "id": 5,
+        "category": "ECMO",
+        "text": "A common indication for VA-ECMO in PICU is:",
+        "options": ["Pneumonia", "Refractory Cardiogenic Shock", "Asthma", "Sepsis alone"],
+        "correctAnswer": 1,
+        "explanation": "VA-ECMO provides cardiac support for refractory cardiogenic shock or post-arrest."
+    },
+    {
+        "id": 6,
+        "category": "Sedation",
+        "text": "The WAT-1 scale is used to assess:",
+        "options": ["Pain", "Sedation level", "Withdrawal symptoms", "Delirium"],
+        "correctAnswer": 2,
+        "explanation": "Withdrawal Assessment Tool-1 monitors for opioid/benzo withdrawal."
+    },
+    {
+        "id": 7,
+        "category": "Trauma",
+        "text": "Cushing's Triad (hypertension, bradycardia, irregular respirations) indicates:",
+        "options": ["Shock", "Increased Intracranial Pressure (ICP)", "Pneumothorax", "Hypothermia"],
+        "correctAnswer": 1,
+        "explanation": "It is a sign of impending herniation due to high ICP."
+    },
+    {
+        "id": 8,
+        "category": "DKA",
+        "text": "Fluids in pediatric DKA should be administered evenly over:",
+        "options": ["24-48 hours", "2-4 hours", "6 hours", "12 hours"],
+        "correctAnswer": 0,
+        "explanation": "Gradual rehydration over 24-48 hours reduces cerebral edema risk."
+    },
+    {
+        "id": 9,
+        "category": "Transfusion",
+        "text": "Typical pediatric PRBC transfusion volume is:",
+        "options": ["1 unit", "5 ml/kg", "10-15 ml/kg", "30 ml/kg"],
+        "correctAnswer": 2,
+        "explanation": "10-15 ml/kg is the standard aliquot."
+    },
+    {
+        "id": 10,
+        "category": "Cardiac",
+        "text": "Ductal-dependent lesions require which medication to keep the PDA open?",
+        "options": ["Indomethacin", "Prostaglandin E1 (PGE1)", "Ibuprofen", "Digoxin"],
+        "correctAnswer": 1,
+        "explanation": "PGE1 infusion maintains ductal patency in critical congenital heart defects."
+    }
+]
+
+# 19. CRITICAL CARE MANAGEMENT (Doctor)
+CRITICAL_CARE_MANAGEMENT_QUESTIONS = [
+    {
+        "id": 1,
+        "category": "Renal",
+        "text": "Indications for CRRT (Continuous Renal Replacement Therapy) include hemodynamic instability and:",
+        "options": ["Chronic renal failure", "Severe fluid overload/Acidosis", "Mild uremia", "Convenience"],
+        "correctAnswer": 1,
+        "explanation": "CRRT is preferred over IHD in unstable patients for fluid overload/metabolic control."
+    },
+    {
+        "id": 2,
+        "category": "Acid-Base",
+        "text": "Metabolic Acidosis with a High Anion Gap is commonly caused by (MUDPILES):",
+        "options": ["Diarrhea", "RTA", "Lactic Acidosis / DKA", "Saline infusion"],
+        "correctAnswer": 2,
+        "explanation": "Lactate, Ketones, Uremia, Toxins cause high anion gap acidosis."
+    },
+    {
+        "id": 3,
+        "category": "Monitoring",
+        "text": "Normal Central Venous Pressure (CVP) is approximately:",
+        "options": ["0-2 mmHg", "8-12 mmHg", "20-25 mmHg", "30-40 mmHg"],
+        "correctAnswer": 1,
+        "explanation": "8-12 mmHg is often cited as a target in ventilated patients, though fluid responsiveness is better assessed dynamically."
+    },
+    {
+        "id": 4,
+        "category": "Neurology",
+        "text": "Brain Death determination usually requires:",
+        "options": ["EEG only", "Clinical exam demonstrating absence of brainstem reflexes and apnea", "MRI", "Family consent"],
+        "correctAnswer": 1,
+        "explanation": "It is a clinical diagnosis based on coma, absence of brainstem reflexes, and apnea test."
+    },
+    {
+        "id": 5,
+        "category": "Heme",
+        "text": "Restrictive transfusion threshold (transfuse if Hgb < 7 g/dL) is indicated for:",
+        "options": ["Active ACS", "Most stable ICU patients", "Massive hemorrhage", "Brain injury"],
+        "correctAnswer": 1,
+        "explanation": "TRICC trial showed Hgb < 7 threshold is safe for most critically ill patients."
+    },
+    {
+        "id": 6,
+        "category": "Endocrine",
+        "text": "Adrenal insufficiency in septic shock (CIRCI) may be treated with:",
+        "options": ["High dose dexamethasone", "Hydrocortisone 200mg/day", "Fludrocortisone", "Prednisone"],
+        "correctAnswer": 1,
+        "explanation": "Hydrocortisone 200mg/day (often 50mg q6h) is used for refractory septic shock."
+    },
+    {
+        "id": 7,
+        "category": "Respiratory",
+        "text": "Prone positioning is indicated for:",
+        "options": ["Mild ARDS", "Moderate-Severe ARDS (P/F < 150)", "COPD", "Pneumothorax"],
+        "correctAnswer": 1,
+        "explanation": "Proning improves V/Q match and survival in severe ARDS."
+    },
+    {
+        "id": 8,
+        "category": "Toxicology",
+        "text": "Treatment for Beta-Blocker overdose includes Glucagon and:",
+        "options": ["Naloxone", "High-dose Insulin Eustroglycemia (HIE)", "Protamine", "Vitamin K"],
+        "correctAnswer": 1,
+        "explanation": "HIE provides metabolic support to the myocardium."
+    },
+    {
+        "id": 9,
+        "category": "Nutrition",
+        "text": "Refeeding syndrome is characterized by hypophosphatemia, hypokalemia, and:",
+        "options": ["Hypermagnesemia", "Hypomagnesemia", "Hypercalcemia", "Hyponatremia"],
+        "correctAnswer": 1,
+        "explanation": "Rapid feeding drives electrolytes intracellularly causing dangerous lows."
+    },
+    {
+        "id": 10,
+        "category": "Ethics",
+        "text": "The primary decision maker for an incapacitated patient without a proxy is typically:",
+        "options": ["The physician", "The hospital ethics board", "Surrogate decision maker hierarchy (spouse, etc.)", "The nurse"],
+        "correctAnswer": 2,
+        "explanation": "Legal hierarchies dictate the surrogate (usually Spouse -> Adult Child -> Parent)."
+    }
+]
+
+# 20. TRAUMA CARE MANAGEMENT (Doctor)
+TRAUMA_CARE_MANAGEMENT_QUESTIONS = [
+    {
+        "id": 1,
+        "category": "Primary Survey",
+        "text": "The 'E' in ABCDE of trauma primary survey stands for:",
+        "options": ["Everything else", "Exposure / Environmental Control", "Evaluation", "Exit"],
+        "correctAnswer": 1,
+        "explanation": "Exposure: Remove clothing to examine, but prevent hypothermia."
+    },
+    {
+        "id": 2,
+        "category": "Shock",
+        "text": "Class III Hemorrhagic shock is associated with blood loss of approx:",
+        "options": ["<15%", "15-30%", "30-40%", ">40%"],
+        "correctAnswer": 2,
+        "explanation": "Class III (30-40%) usually presents with hypotension and tachycardia."
+    },
+    {
+        "id": 3,
+        "category": "Diagnosis",
+        "text": "FAST exam is used to detect:",
+        "options": ["Fractures", "Free fluid (blood) in pericardium/abdomen", "Organ function", "Spinal injury"],
+        "correctAnswer": 1,
+        "explanation": "Focused Assessment with Sonography for Trauma detects free fluid."
+    },
+    {
+        "id": 4,
+        "category": "Thoracic",
+        "text": "Immediate treatment for Tension Pneumothorax is:",
+        "options": ["CXR", "Needle Decompression / Finger Thoracostomy", "Intubation", "Antibiotics"],
+        "correctAnswer": 1,
+        "explanation": "Immediate decompression is required before CXR confirmation."
+    },
+    {
+        "id": 5,
+        "category": "Neuro",
+        "text": "GCS score of 8 or less indicates:",
+        "options": ["Mild injury", "Moderate injury", "Severe injury / Coma (Intubate)", "Normal"],
+        "correctAnswer": 2,
+        "explanation": "GCS ≤ 8 requires airway protection (GCS 8, intubate)."
+    },
+    {
+        "id": 6,
+        "category": "Transfusion",
+        "text": "Massive Transfusion Protocol usually employs a ratio of RBC:FFP:Platelets of:",
+        "options": ["3:1:1", "1:1:1", "10:1:1", "Only RBCs"],
+        "correctAnswer": 1,
+        "explanation": "1:1:1 ratio mimics whole blood and prevents coagulopathy."
+    },
+    {
+        "id": 7,
+        "category": "Pelvis",
+        "text": "An unstable pelvic fracture should be managed initially with:",
+        "options": ["Surgery immediately", "Pelvic binder/sheet wrap", "Traction", "Observation"],
+        "correctAnswer": 1,
+        "explanation": "Binder reduces pelvic volume and stabilizes clots."
+    },
+    {
+        "id": 8,
+        "category": "Spine",
+        "text": "Nexis criteria are used to:",
+        "options": ["Diagnose rib fractures", "Clear C-spine clinically", "Assess head injury", "Determine shock"],
+        "correctAnswer": 1,
+        "explanation": "NEXUS criteria allow clinical clearance of C-spine without imaging if low risk."
+    },
+    {
+        "id": 9,
+        "category": "Burns",
+        "text": "Parkland Formula for burn resuscitation uses:",
+        "options": ["2 ml x kg x %BSA", "4 ml x kg x %BSA", "10 ml/kg", "1 liter bolus"],
+        "correctAnswer": 1,
+        "explanation": "4 ml/kg/%TBSA given over 24h (half in first 8h)."
+    },
+    {
+        "id": 10,
+        "category": "Secondary Survey",
+        "text": "The secondary survey begins:",
+        "options": ["Immediately", "After primary survey and resuscitation are complete", "In the ambulance", "Before airway"],
+        "correctAnswer": 1,
+        "explanation": "Head-to-toe exam occurs only after life threats are managed."
+    }
+]
+
+# 21. SURGICAL CARE & MANAGEMENT (Doctor)
+SURGICAL_CARE_MANAGEMENT_QUESTIONS = [
+    {
+        "id": 1,
+        "category": "Safety",
+        "text": "The 'Time Out' must be performed:",
+        "options": ["Before anesthesia", "Before incision", "After surgery", "In recovery"],
+        "correctAnswer": 1,
+        "explanation": "Immediately before incision to verify patient, procedure, and site."
+    },
+    {
+        "id": 2,
+        "category": "Infection",
+        "text": "Prophylactic antibiotics should be administered:",
+        "options": ["Within 60 mins prior to incision", "The night before", "After incision", "Only if dirty"],
+        "correctAnswer": 0,
+        "explanation": "To ensure tissue concentration, give within 1 hour before cut."
+    },
+    {
+        "id": 3,
+        "category": "VTE",
+        "text": "Caprini Score is used to assess risk of:",
+        "options": ["Infection", "Bleeding", "Venous Thromboembolism (VTE)", "Cardiac arrest"],
+        "correctAnswer": 2,
+        "explanation": "Stratifies VTE risk to guide prophylaxis."
+    },
+    {
+        "id": 4,
+        "category": "Consent",
+        "text": "Informed consent requires discussion of:",
+        "options": ["Price only", "Risks, Benefits, and Alternatives", "Surgeon's history", "Hospital policies"],
+        "correctAnswer": 1,
+        "explanation": "Patient must understand R/B/A to give informed consent."
+    },
+    {
+        "id": 5,
+        "category": "Complications",
+        "text": "Malignant Hyperthermia is triggered by:",
+        "options": ["Propofol", "Succinylcholine and Volatile Agents", "Opioids", "Antibiotics"],
+        "correctAnswer": 1,
+        "explanation": "Inhaled anesthetics and Succinylcholine are classic triggers."
+    },
+    {
+        "id": 6,
+        "category": "Fever",
+        "text": "The '5 W's' of post-op fever include Wind, Water, Walk, Wound, and:",
+        "options": ["Wonder drug", "Weather", "Weight", "Waste"],
+        "correctAnswer": 0,
+        "explanation": "Wonder drugs (drug fever) / What did we do. (Wind=Lungs, Water=UTI, Walk=DVT, Wound=SSI)."
+    },
+    {
+        "id": 7,
+        "category": "Wound",
+        "text": "A 'Clean-Contaminated' wound involves:",
+        "options": ["No entry into tracts", "Controlled entry into GI/Resp/GU tracts", "Gross spillage", "Old trauma"],
+        "correctAnswer": 1,
+        "explanation": "Class II: Controlled entry into hollow viscus without unusual contamination."
+    },
+    {
+        "id": 8,
+        "category": "ERAS",
+        "text": "ERAS (Enhanced Recovery After Surgery) protocols emphasize:",
+        "options": ["Prolonged fasting", "Opioid-sparing analgesia and early mobilization", "Bed rest", "Large fluid boluses"],
+        "correctAnswer": 1,
+        "explanation": "Multimodal analgesia and early moving reduce recovery time."
+    },
+    {
+        "id": 9,
+        "category": "Fluids",
+        "text": "Third spacing refers to:",
+        "options": ["Fluid loss externally", "Fluid shift into interstitial spaces", "Drinking water", "Urination"],
+        "correctAnswer": 1,
+        "explanation": "Sequestration of fluid into non-functional extracellular space."
+    },
+    {
+        "id": 10,
+        "category": "Medications",
+        "text": "Which medication should generally be held before surgery?",
+        "options": ["Beta blockers", "Statins", "Warfarin/Anticoagulants", "Tylenol"],
+        "correctAnswer": 2,
+        "explanation": "Anticoagulants are held to prevent bleeding; Beta blockers/Statins are usually continued."
+    }
+]
+
+# 22. ANESTHESIA MONITORING (Doctor)
+ANESTHESIA_MONITORING_QUESTIONS = [
+    {
+        "id": 1,
+        "category": "ASA",
+        "text": "ASA Class III refers to a patient with:",
+        "options": ["Normal health", "Mild systemic disease", "Severe systemic disease", "Threat to life"],
+        "correctAnswer": 2,
+        "explanation": "ASA III is severe systemic disease (e.g., poorly controlled DM/HTN)."
+    },
+    {
+        "id": 2,
+        "category": "Airway",
+        "text": "Mallampati Class IV means:",
+        "options": ["Full view of uvula", "Only hard palate visible", "Soft palate visible", "Tonsils visible"],
+        "correctAnswer": 1,
+        "explanation": "Class IV: Only hard palate visible, predicting difficult intubation."
+    },
+    {
+        "id": 3,
+        "category": "Capnography",
+        "text": "Loss of ETCO2 waveform usually indicates:",
+        "options": ["Cardiac arrest or circuit disconnect/esophageal intubation", "Patient sleeping", "Deep anesthesia", "High BP"],
+        "correctAnswer": 0,
+        "explanation": "Sudden loss implies no ventilation or no circulation."
+    },
+    {
+        "id": 4,
+        "category": "Monitoring",
+        "text": "Standard ASA monitors include ECG, BP, Pulse Ox, Temperature, and:",
+        "options": ["EEG", "Capnography/Oxygenation", "CVP", "BIS"],
+        "correctAnswer": 1,
+        "explanation": "Capnography/Gas monitoring is a standard requirement."
+    },
+    {
+        "id": 5,
+        "category": "MAC",
+        "text": "MAC (Minimum Alveolar Concentration) is the concentration preventing movement in:",
+        "options": ["100% of patients", "50% of patients", "10% of patients", "All children"],
+        "correctAnswer": 1,
+        "explanation": "MAC is the ED50 of an anesthetic."
+    },
+    {
+        "id": 6,
+        "category": "BIS",
+        "text": "Bispectral Index (BIS) monitoring targets a range of ___ for general anesthesia.",
+        "options": ["80-100", "40-60", "0-20", "90-100"],
+        "correctAnswer": 1,
+        "explanation": "40-60 indicates appropriate general anesthesia depth."
+    },
+    {
+        "id": 7,
+        "category": "NIBP",
+        "text": "If a BP cuff is too small, the reading will be:",
+        "options": ["Falsely low", "Falsely high", "Accurate", "Zero"],
+        "correctAnswer": 1,
+        "explanation": "Too small/tight cuff yields falsely high readings."
+    },
+    {
+        "id": 8,
+        "category": "Temperature",
+        "text": "Hypothermia in anesthesia is associated with:",
+        "options": ["Better healing", "Coagulopathy and wound infection", "Reduced bleeding", "Comfort"],
+        "correctAnswer": 1,
+        "explanation": "Perioperative hypothermia increases infection and bleeding risk."
+    },
+    {
+        "id": 9,
+        "category": "Pulse Ox",
+        "text": "Pulse oximetry measures:",
+        "options": ["PaO2", "Hemoglobin saturation (SpO2)", "Ventilation", "CO2"],
+        "correctAnswer": 1,
+        "explanation": "It measures % of Hb saturated with oxygen, not ventilation."
+    },
+    {
+        "id": 10,
+        "category": "Extubation",
+        "text": "Criteria for extubation include:",
+        "options": ["Eyes open only", "Return of reflexes, adequate tidal volume, following commands", "Surgery finished", "Time expired"],
+        "correctAnswer": 1,
+        "explanation": "Patient must protect airway and breathe adequately."
+    }
+]
+
+# 23. MODERATE SEDATION (Doctor)
+MODERATE_SEDATION_QUESTIONS = [
+    {
+        "id": 1,
+        "category": "Definition",
+        "text": "Moderate Sedation (Conscious Sedation) means the patient:",
+        "options": ["Is unconscious", "Responds to verbal/tactile stimulation and maintains airway", "Needs intubation", "Feels no pain at all"],
+        "correctAnswer": 1,
+        "explanation": "Patient maintains protective reflexes and responds to stimulation."
+    },
+    {
+        "id": 2,
+        "category": "Reversal",
+        "text": "The reversal agent for Benzodiazepines (Midazolam) is:",
+        "options": ["Naloxone", "Flumazenil", "Protamine", "Atropine"],
+        "correctAnswer": 1,
+        "explanation": "Flumazenil reverses benzodiazepine effects."
+    },
+    {
+        "id": 3,
+        "category": "Reversal",
+        "text": "The reversal agent for Opioids (Fentanyl) is:",
+        "options": ["Naloxone", "Flumazenil", "Vitamin K", "Succinylcholine"],
+        "correctAnswer": 0,
+        "explanation": "Naloxone reverses opioid effects/respiratory depression."
+    },
+    {
+        "id": 4,
+        "category": "Airway",
+        "text": "If a sedated patient obstructs their airway (snoring/desating), the first maneuver is:",
+        "options": ["Intubate", "Stimulate and Jaw Thrust/Chin Lift", "Give Flumazenil", "Call code"],
+        "correctAnswer": 1,
+        "explanation": "Simple airway maneuvers and stimulation often resolve obstruction in moderate sedation."
+    },
+    {
+        "id": 5,
+        "category": "NPO",
+        "text": "Standard NPO guideline for clear liquids is:",
+        "options": ["2 hours", "4 hours", "6 hours", "8 hours"],
+        "correctAnswer": 0,
+        "explanation": "2 hours for clear liquids, 6 hours for light meal."
+    },
+    {
+        "id": 6,
+        "category": "Monitoring",
+        "text": "During moderate sedation, vital signs should be recorded at least every:",
+        "options": ["5-15 minutes", "30 minutes", "1 hour", "Once"],
+        "correctAnswer": 0,
+        "explanation": "Frequent monitoring (q5-15m) detects respiratory depression early."
+    },
+    {
+        "id": 7,
+        "category": "Discharge",
+        "text": "Aldrete Score is used for:",
+        "options": ["Pre-op assessment", "Sedation level", "Post-anesthesia recovery/discharge criteria", "Pain"],
+        "correctAnswer": 2,
+        "explanation": "Determines readiness for discharge from PACU/Recovery."
+    },
+    {
+        "id": 8,
+        "category": "Equipment",
+        "text": "Essential equipment at bedside includes suction, oxygen, and:",
+        "options": ["Defibrillator/Crash Cart nearby", "MRI machine", "Cafeteria menu", "Surgical tray"],
+        "correctAnswer": 0,
+        "explanation": "Resuscitation equipment must be immediately available."
+    },
+    {
+        "id": 9,
+        "category": "Consent",
+        "text": "Separate consent for sedation:",
+        "options": ["Is never needed", "Is required", "Is implied", "Only for kids"],
+        "correctAnswer": 1,
+        "explanation": "Sedation carries independent risks requiring informed consent."
+    },
+    {
+        "id": 10,
+        "category": "Staffing",
+        "text": "The person administering sedation should:",
+        "options": ["Also do the procedure", "Be dedicated to monitoring the patient (or have a monitor)", "Be a student", "Be the surgeon"],
+        "correctAnswer": 1,
+        "explanation": "Ideally, a dedicated monitor allows the proceduralist to focus, or strict guidelines apply."
+    }
+]
+
 # -----------------------------------------------------------------------------
 # DATA: QUESTIONS WITH CATEGORIES
 # -----------------------------------------------------------------------------
@@ -1114,7 +2038,18 @@ ASSESSMENT_MODULES = {
     "Critical Care Nursing Competency Assessment": CRITICAL_CARE_QUESTIONS,
     "Intensive Care Competency Assessment": INTENSIVE_CARE_QUESTIONS,
     "Emergency Care Competency Assessment": EMERGENCY_CARE_QUESTIONS,
-    "Pediatric Nursing Care Competency Assessment": PEDIATRIC_NURSING_QUESTIONS
+    "Pediatric Nursing Care Competency Assessment": PEDIATRIC_NURSING_QUESTIONS,
+    "Pediatric Medical Care": PEDIATRIC_MEDICAL_CARE_QUESTIONS,
+    "Pediatric Emergency Care": PEDIATRIC_EMERGENCY_CARE_QUESTIONS,
+    "Basic Life Support (BLS)": BLS_QUESTIONS,
+    "Advanced Life Support (ALS)": ALS_QUESTIONS,
+    "Intensive Care Management": INTENSIVE_CARE_MANAGEMENT_QUESTIONS,
+    "Pediatric Intensive Care": PEDIATRIC_INTENSIVE_CARE_QUESTIONS,
+    "Critical Care Management": CRITICAL_CARE_MANAGEMENT_QUESTIONS,
+    "Trauma Care Management": TRAUMA_CARE_MANAGEMENT_QUESTIONS,
+    "Surgical Care & Management": SURGICAL_CARE_MANAGEMENT_QUESTIONS,
+    "Anesthesia Monitoring": ANESTHESIA_MONITORING_QUESTIONS,
+    "Moderate Sedation": MODERATE_SEDATION_QUESTIONS
 }
 
 # Map Roles to Eligible Assessment Modules
@@ -1136,7 +2071,18 @@ ROLE_ACCESS = {
     "Physician / Doctor": [
         "Medication Safety Guidelines",
         "Medical Records Documentation",
-        "Patient Safety Guidelines"
+        "Patient Safety Guidelines",
+        "Pediatric Medical Care",
+        "Pediatric Emergency Care",
+        "Basic Life Support (BLS)",
+        "Advanced Life Support (ALS)",
+        "Intensive Care Management",
+        "Pediatric Intensive Care",
+        "Critical Care Management",
+        "Trauma Care Management",
+        "Surgical Care & Management",
+        "Anesthesia Monitoring",
+        "Moderate Sedation"
     ],
     "Technician / Allied Health": [
         "Basic Infection Control (Technician)",
