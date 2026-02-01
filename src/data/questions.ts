@@ -1,4 +1,5 @@
 import { Assessment } from '../types';
+import infectionControlImg from '../assets/infection-control.jpg';
 
 export const infectionControlAssessment: Assessment = {
   id: 'infection-control-nurse',
@@ -7,7 +8,7 @@ export const infectionControlAssessment: Assessment = {
   role: 'Hospital Infection Control Nurse',
   passingScore: 50, // 50% to pass
   duration: 10,
-  imageUrl: '/assets/infection-control.jpg',
+  imageUrl: infectionControlImg,
   questions: [
     {
       id: 1,

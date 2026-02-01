@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../assets/image1.png';
 
 export const Header: React.FC = () => {
   return (
@@ -7,7 +8,7 @@ export const Header: React.FC = () => {
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3">
           <img 
-            src="/assets/image1.png" 
+            src={logo} 
             alt="NICE Academy Logo" 
             className="h-20 w-auto object-contain"
             onError={(e) => {

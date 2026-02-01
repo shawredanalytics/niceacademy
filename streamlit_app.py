@@ -13,12 +13,21 @@ def load_frontend():
     """
     Loads the React frontend built in the 'dist' directory.
     """
+    # Locate the dist folder
+    # When deployed, the script is usually at the root, so dist is ./dist
     build_dir = os.path.join(os.path.dirname(__file__), "dist")
     index_path = os.path.join(build_dir, "index.html")
 
     if not os.path.exists(index_path):
         st.error("Build artifact not found. Please run 'npm run build' first.")
-        st.info("If you are deploying on Streamlit Cloud, ensure 'packages.txt' includes 'nodejs' and 'npm'.")
+        # Debug info
+        st.write(f"Current working directory: {os.getcwd()}")
+        st.write(f"Looking for index at: {index_path}")
+        st.write("Files in current directory:")
+        st.write(os.listdir(os.getcwd()))
+        if os.path.exists(build_dir):
+            st.write(f"Files in {build_dir}:")
+            st.write(os.listdir(build_dir))
         return
 
     # Read the index.html file
@@ -26,27 +35,25 @@ def load_frontend():
         with open(index_path, "r", encoding="utf-8") as f:
             html_content = f.read()
             
-        # Basic approach: Render the HTML in an iframe
-        # Note: Relative paths in index.html (like /assets/...) may need adjustment 
-        # depending on how Streamlit serves static files.
-        # For a production-grade integration, consider using 'streamlit-component-template' 
-        # or serving static files via a separate backend.
-        
+        # Remove default Streamlit padding to make it look like a native app
         st.markdown(
             """
             <style>
-                /* Remove default Streamlit padding */
                 .block-container {
-                    padding-top: 0rem;
-                    padding-bottom: 0rem;
-                    padding-left: 0rem;
-                    padding-right: 0rem;
+                    padding: 0 !important;
                 }
+                /* Hide Streamlit elements */
+                #MainMenu {visibility: hidden;}
+                footer {visibility: hidden;}
+                header {visibility: hidden;}
             </style>
             """,
             unsafe_allow_html=True
         )
         
+        # Render the HTML
+        # height=1000 is a placeholder; usually we want it to fit the screen.
+        # But for a long page like this, a large height is better.
         components.html(html_content, height=1000, scrolling=True)
         
     except Exception as e:

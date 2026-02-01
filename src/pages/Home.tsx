@@ -4,6 +4,8 @@ import { Footer } from '../components/Footer';
 import { AssessmentCard } from '../components/AssessmentCard';
 import { infectionControlAssessment } from '../data/questions';
 import { Shield, Activity, Users, FileText, Building, HeartPulse } from 'lucide-react';
+import heroBg from '../assets/hero-bg.jpg';
+import aboutSection from '../assets/about-section.jpg';
 
 export const Home: React.FC = () => {
   const services = [
@@ -51,7 +53,7 @@ export const Home: React.FC = () => {
       {/* Hero Section */}
       <section className="relative bg-blue-900 text-white py-20 overflow-hidden">
         <div className="absolute inset-0 opacity-20">
-          <img src="/assets/hero-bg.jpg" alt="Background" className="w-full h-full object-cover" />
+          <img src={heroBg} alt="Background" className="w-full h-full object-cover" />
         </div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -86,7 +88,7 @@ export const Home: React.FC = () => {
             </div>
             <div className="relative h-full min-h-[400px]">
                <img 
-                 src="/assets/about-section.jpg" 
+                 src={aboutSection} 
                  alt="About NICE Academy" 
                  className="absolute inset-0 w-full h-full object-cover rounded-2xl shadow-xl" 
                />
