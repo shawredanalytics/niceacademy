@@ -259,7 +259,7 @@ def show_about_page():
 
 def show_landing_page():
     st.markdown('<h1 class="main-header">NICE Academy</h1>', unsafe_allow_html=True)
-    st.markdown('<h2 class="sub-header" style="text-align: center;">Healthcare Professionals Competency Assessment Portal Builder</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="sub-header" style="text-align: center;">Healthcare Professionals Competency Assessment Portal</h2>', unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
