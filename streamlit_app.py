@@ -267,7 +267,7 @@ def show_landing_page():
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         st.info("""
-        **Welcome!** This portal allows healthcare professionals to assess their knowledge of quality systems and key patient safety protocols.
+        **Welcome!** This portal allows healthcare professionals to assess their knowledge and competence of work procedures, healthcare quality systems and key professional/patient safety protocols.
         
         Healthcare Professionals who pass the competency assessment will be provided with free competency based self assessment certificate to help them in their career progression.
 
