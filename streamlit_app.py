@@ -55,6 +55,59 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+import os
+import subprocess
+
+# ... (rest of imports)
+
+# -----------------------------------------------------------------------------
+# DATA PERSISTENCE
+# -----------------------------------------------------------------------------
+DATA_FILE = "data/assessment_results.csv"
+
+def save_result(user_info, score, total_q, passed):
+    # Ensure data directory exists
+    os.makedirs("data", exist_ok=True)
+    
+    # Create record
+    record = {
+        "Name": user_info['name'],
+        "Email": user_info['email'],
+        "Role": user_info['role'],
+        "Hospital": user_info['hospital'],
+        "Module": user_info['assessment_type'],
+        "Date": user_info['date'],
+        "Score": score,
+        "Total": total_q,
+        "Percentage": f"{(score/total_q)*100:.1f}%",
+        "Result": "PASS" if passed else "FAIL"
+    }
+    
+    # Save to CSV
+    df_new = pd.DataFrame([record])
+    
+    if os.path.exists(DATA_FILE):
+        df_new.to_csv(DATA_FILE, mode='a', header=False, index=False)
+    else:
+        df_new.to_csv(DATA_FILE, mode='w', header=True, index=False)
+
+def push_data_to_github():
+    try:
+        # Add the data file
+        subprocess.run(["git", "add", DATA_FILE], check=True)
+        
+        # Commit
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        subprocess.run(["git", "commit", "-m", f"Auto-backup assessment data: {timestamp}"], check=True)
+        
+        # Push
+        subprocess.run(["git", "push"], check=True)
+        return True, "Data successfully backed up to GitHub!"
+    except subprocess.CalledProcessError as e:
+        return False, f"Git Error: {str(e)}"
+    except Exception as e:
+        return False, f"Error: {str(e)}"
+
 # -----------------------------------------------------------------------------
 # HELPER FUNCTIONS
 # -----------------------------------------------------------------------------
@@ -68,7 +121,7 @@ def reset_app():
     if 'q_start_time' in st.session_state:
         del st.session_state.q_start_time
 
-def start_assessment(name, role, hospital, assessment_type):
+def start_assessment(name, email, role, hospital, assessment_type):
     # Get the questions for the selected assessment type
     all_questions = ASSESSMENT_MODULES.get(assessment_type, ASSESSMENT_MODULES["Infection Control Guidelines"])
     
@@ -78,10 +131,11 @@ def start_assessment(name, role, hospital, assessment_type):
     
     st.session_state.user_info = {
         "name": name,
+        "email": email,
         "role": role,
         "hospital": hospital,
         "assessment_type": assessment_type,
-        "date": datetime.now().strftime("%Y-%m-%d")
+        "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
     st.session_state.current_questions = questions
     st.session_state.assessment_started = True
@@ -198,6 +252,7 @@ def show_landing_page():
         
         # Registration Inputs
         name = st.text_input("Full Name", placeholder="e.g. Jane Doe, RN")
+        email = st.text_input("Email ID", placeholder="e.g. jane.doe@example.com")
         
         # Role Selection
         role_options = [
@@ -236,10 +291,12 @@ def show_landing_page():
         st.markdown("<br>", unsafe_allow_html=True)
         
         if st.button("Start Assessment", use_container_width=True):
-            if name and role != "Select your role..." and assessment_type:
-                start_assessment(name, role, hospital, assessment_type)
+            if name and email and role != "Select your role..." and assessment_type:
+                start_assessment(name, email, role, hospital, assessment_type)
             elif not name:
                 st.error("Please enter your Full Name.")
+            elif not email:
+                st.error("Please enter your Email ID.")
             elif role == "Select your role...":
                 st.error("Please select a Role.")
             elif not assessment_type:
@@ -450,6 +507,11 @@ def show_results_page():
     percentage = (score / total_q) * 100
     passed = percentage >= 75
     
+    # Save Results
+    if not st.session_state.get('results_saved', False):
+        save_result(st.session_state.user_info, score, total_q, passed)
+        st.session_state.results_saved = True
+    
     # Summary Card
     col1, col2 = st.columns([1, 2])
     
@@ -523,6 +585,50 @@ def show_results_page():
         reset_app()
         st.rerun()
 
+def show_admin_page():
+    st.markdown('<h1 class="main-header">Admin Dashboard</h1>', unsafe_allow_html=True)
+    
+    # Simple Authentication
+    password = st.sidebar.text_input("Admin Password", type="password")
+    
+    if password == "admin123": # TODO: Use safer auth in production
+        st.success("Authenticated")
+        
+        st.subheader("Assessment Results")
+        
+        if os.path.exists(DATA_FILE):
+            df = pd.read_csv(DATA_FILE)
+            st.dataframe(df, use_container_width=True)
+            
+            # Download Button
+            csv = df.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                "📥 Download Data (CSV)",
+                csv,
+                "assessment_results.csv",
+                "text/csv",
+                key='download-csv'
+            )
+            
+            st.markdown("---")
+            st.subheader("Data Backup")
+            st.write("Push the latest results to the GitHub repository.")
+            
+            if st.button("☁️ Backup Data to GitHub"):
+                with st.spinner("Backing up data..."):
+                    success, msg = push_data_to_github()
+                    if success:
+                        st.success(msg)
+                    else:
+                        st.error(msg)
+        else:
+            st.info("No assessment data available yet.")
+            
+    elif password:
+        st.error("Invalid Password")
+    else:
+        st.info("Please enter the admin password to view data.")
+
 # -----------------------------------------------------------------------------
 # MAIN APP FLOW
 # -----------------------------------------------------------------------------
@@ -551,7 +657,7 @@ def main():
                 pass
             
             st.markdown("### Navigation")
-            page = st.radio("Go to", ["Home", "About Us"])
+            page = st.radio("Go to", ["Home", "About Us", "Admin Login"])
             
             st.markdown("---")
             st.info("Select 'Home' to start an assessment.")
@@ -560,6 +666,8 @@ def main():
             show_landing_page()
         elif page == "About Us":
             show_about_page()
+        elif page == "Admin Login":
+            show_admin_page()
             
     elif not st.session_state.submitted:
         show_assessment_page()
