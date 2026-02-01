@@ -322,7 +322,7 @@ def show_landing_page():
 
         st.markdown("<br>", unsafe_allow_html=True)
         
-        if st.button("Start Assessment", use_container_width=True):
+        if st.button("Start Competency based Self Assessment", use_container_width=True):
             if name and email and role != "Select your role..." and assessment_type:
                 start_assessment(name, email, role, hospital, assessment_type)
             elif not name:
